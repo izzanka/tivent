@@ -13,10 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+Route::get('/detail/{id}','HomeController@detail');
+
+Route::get('/transaksi/create/{id}','TransaksiController@create');
+Route::post('/transaksi/store/{id}', 'TransaksiController@store');
+Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
+Route::post('/transaksi/store/bukti/{id}' , 'TransaksiController@storebukti');
+Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
+
+Route::get('/cart','CartController@index');
+
+Route::get('/event/mulai/{id}', 'EventController@mulai');
+Route::get('/event/selesai/{id}', 'EventController@selesai');
+Route::resource('event','EventController');
+
+Route::get('tiket/create/{id}', 'TiketController@create');
+Route::resource('tiket','TiketController');
+
+Route::resource('profile','ProfileController');
+
+
+Route::group(['Middleware' => ['CheckRole:admin']], function(){
+    Route::resource('admin','AdminController');
+});

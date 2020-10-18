@@ -17,8 +17,11 @@ class CreateTransaksisTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('tiket_id');
-            $table->string('kode_tiket');
-            $table->string('bukti');
+            $table->string('kode_tiket')->nullable();
+            $table->integer('jumlah_tiket');
+            $table->integer('total_harga');
+            $table->string('bukti_pembayaran')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

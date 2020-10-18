@@ -16,8 +16,9 @@ class CreateTiketsTable extends Migration
         Schema::create('tikets', function (Blueprint $table) {
             $table->id();
             $table->integer('event_id');
-            $table->string('harga');
-            $table->integer('jumlah');
+            $table->string('jenis_tiket');
+            $table->string('harga_tiket');
+            $table->integer('jumlah_tiket');
             $table->timestamps();
         });
     }

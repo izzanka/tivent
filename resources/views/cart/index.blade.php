@@ -1,0 +1,96 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/home" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
+            
+            <nav aria-label="breadcrumb" class="mt-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+
+        </div>
+        
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="mb-3"><i class="fas fa-shopping-cart"></i> Cart</h3>
+                    <small>Upload bukti pembayaran maksimal satu hari sebelum event dimulai</small>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Event</th>
+                                    <th>Jenis Tiket</th>
+                                    <th>Harga Tiket</th>
+                                    <th>Jumlah Tiket</th>
+                                    <th>Total Harga</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($transaksi as $t)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td><a href="/detail/{{$t->tiket->event->id}}">{{$t->tiket->event->nama_event}}</a></td>
+                                    <td>{{$t->tiket->jenis_tiket}}</td>
+                                    <td>Rp. {{$t->tiket->harga_tiket}}</td>
+                                    <td>{{$t->jumlah_tiket}}</td>
+                                    <td>Rp. {{$t->total_harga}}</td>
+                                    @switch($t->status)
+                                        @case(1)
+                                            <td>Pembayaran Sedang Dikonfirmasi</td>
+                                            <td><a href="/transaksi/cancel/{{$t->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(2)
+                                            <td>Pembayaran Berhasil Dikonfirmasi</td>
+                                            @break
+                                        @case(3)
+                                            <td>Pembayaran Tidak Dapat Dikonfirmasi</td>
+                                            <td><a href="/transaksi/cancel/{{$t->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(4)
+                                            <td>Pesanan Dibatalkan Oleh User</td>
+                                            @break
+                                        @case(5)
+                                            <td>Pesanan Dibatalkan Oleh Admin</td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(6)
+                                            <td>Event Dibatalkan</td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(7)
+                                            <td>Event Sedang Dimulai</td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(8)
+                                            <td>Event Sudah Selesai</td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @case(9)
+                                            <td>Pesanan Kadaluwarsa</td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                            @break
+                                        @default
+                                        <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
+                                        <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                    @endswitch
+                                 
+                                </tr>
+                                @endforeach
+                            </tbody>     
+                        </table>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

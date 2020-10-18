@@ -18,9 +18,13 @@ class CreateEventsTable extends Migration
             $table->integer('user_id');
             $table->string('nama_event');
             $table->string('deskripsi_event');
+            $table->enum('kategori_event',['konser','festival','gaming','fashion','pameran','olahraga']);
+            $table->string('tempat_event');
+            $table->time('waktu_event');
+            $table->date('tanggal_event');
+            $table->integer('status_event')->nullable();
             $table->string('foto_event');
             $table->string('foto_identitas');
-            $table->string('foto_identitas2');
             $table->timestamps();
         });
     }

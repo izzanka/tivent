@@ -7,4 +7,5 @@ Ketikkan:
 3. php artisan key:generate
 4. php artisan migrate (Jangan lupa set up database) //nama dbnya tivent
 5. php artisan db:seed --class=AdminSeeder
+6. php artisan serve
 

@@ -10,6 +10,7 @@ use App\Tiket;
 use App\Transaksi;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -53,6 +54,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+       
         $request->validate([
             'nama_event' => 'required',
             'deskripsi_event' => 'required',
@@ -65,6 +67,8 @@ class EventController extends Controller
         ]);
 
         $check = Auth::user()->id;
+        $checktanggal = Carbon::today();
+
         $user = User::where('id',$check)->first();
 
         if($user->nomor_rekening == null){
@@ -77,7 +81,11 @@ class EventController extends Controller
             $event->kategori_event = $request->kategori_event;
             $event->tempat_event = $request->tempat_event;
             $event->waktu_event = $request->waktu_event;
-            $event->tanggal_event = $request->tanggal_event;
+            if($request->tanggal_event <= $checktanggal){
+                return redirect()->back();
+            }else{
+                $event->tanggal_event = $request->tanggal_event;
+            }
             $event->status_event = 0;
             if($request->hasFile('foto_event')){
                 $uuid = Str::uuid()->toString();
@@ -138,14 +146,18 @@ class EventController extends Controller
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
         ]);
-
+        $checktanggal = Carbon::today();
         $event = Event::where('id',$id)->first();
         $event->nama_event = $request->nama_event;
         $event->deskripsi_event = $request->deskripsi_event;
         $event->kategori_event = $request->kategori_event;  
         $event->tempat_event = $request->tempat_event;
         $event->waktu_event = $request->waktu_event;
-        $event->tanggal_event = $request->tanggal_event;
+        if($request->tanggal_event <= $checktanggal){
+            return redirect()->back();
+        }else{
+            $event->tanggal_event = $request->tanggal_event;
+        }
         if($request->hasFile('foto_event')){
             $uuid = Str::uuid()->toString();
             $file = $uuid . '-' . $request->file('foto_event')->getClientOriginalName();
@@ -173,50 +185,31 @@ class EventController extends Controller
     {
         $event = Event::where('id',$id)->first();
         $tiket = Tiket::where('event_id',$id)->get();
-        foreach($tiket as $tikets){
-            $transaksi = Transaksi::where('tiket_id',$tikets->id)->get();
-        }
 
         if(Storage::exists('public/event/'.$event->foto_event) && Storage::exists('public/identitas/'.$event->foto_identitas)){
             Storage::delete(['public/event/'.$event->foto_event, 'public/identitas/' . $event->foto_identitas]);            
         }
-        $transaksi->each->delete();
         $tiket->each->delete();
         $event->delete();
+  
        
         return redirect('/event');
     }
 
     public function mulai($id){
         $event = Event::where('id',$id)->first();
-        $tiket = Tiket::where('event_id',$id)->first();
-        $transaksi = Transaksi::where('tiket_id',$tiket->id)->get();
-        
-
         $event->status_event = 1;
-        foreach($transaksi as $t){
-            $t->status = 7;
-        }
         $event->update();
-        $t->update();
+        
 
         return redirect('/event');
     }
 
     public function selesai($id){
         $event = Event::where('id',$id)->first();
-        $tiket = Tiket::where('event_id',$id)->get();
-        foreach($tiket as $t){
-            $transaksi = Transaksi::where('tiket_id',$t->id)->get();
-        }
-       
-
         $event->status_event = 2;
-        foreach($transaksi as $t){
-            $t->status = 8;
-        }
         $event->update();
-        $t->update();
+ 
 
         return redirect('/event');
     }

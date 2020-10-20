@@ -26,6 +26,8 @@ class CreateEventsTable extends Migration
             $table->string('foto_event');
             $table->string('foto_identitas');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+
         });
     }
 

@@ -26,6 +26,7 @@ Route::post('/transaksi/store/{id}', 'TransaksiController@store');
 Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
 Route::post('/transaksi/store/bukti/{id}' , 'TransaksiController@storebukti');
 Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
+Route::get('/transaksi/delete/{id}','TransaksiController@delete');
 
 Route::get('/cart','CartController@index');
 

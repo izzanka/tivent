@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function detail($id)
     {
         $tiket = Tiket::where('event_id',$id)->get();
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         return view('detail',compact('tiket','event'));
     }
 }

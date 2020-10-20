@@ -35,55 +35,45 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach($transaksi as $t)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td><a href="/detail/{{$t->tiket->event->id}}">{{$t->tiket->event->nama_event}}</a></td>
-                                    <td>{{$t->tiket->jenis_tiket}}</td>
-                                    <td>Rp. {{$t->tiket->harga_tiket}}</td>
-                                    <td>{{$t->jumlah_tiket}}</td>
-                                    <td>Rp. {{$t->total_harga}}</td>
-                                    @switch($t->status)
-                                        @case(1)
-                                            <td>Pembayaran Sedang Dikonfirmasi</td>
-                                            <td><a href="/transaksi/cancel/{{$t->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(2)
-                                            <td>Pembayaran Berhasil Dikonfirmasi</td>
-                                            @break
-                                        @case(3)
-                                            <td>Pembayaran Tidak Dapat Dikonfirmasi</td>
-                                            <td><a href="/transaksi/cancel/{{$t->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(4)
-                                            <td>Pesanan Dibatalkan Oleh User</td>
-                                            @break
-                                        @case(5)
-                                            <td>Pesanan Dibatalkan Oleh Admin</td>
-                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(6)
-                                            <td>Event Dibatalkan</td>
-                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(7)
-                                            <td>Event Sedang Dimulai</td>
-                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(8)
-                                            <td>Event Sudah Selesai</td>
-                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @case(9)
-                                            <td>Pesanan Kadaluwarsa</td>
-                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                            @break
-                                        @default
-                                        <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
+                        
+                                    <tr>
+
+                                        <td>{{$loop->iteration}}</td>
+                                        @if($t->tiket)
+                                        <td><a href="/detail/{{$t->tiket->event->id}}">{{$t->tiket->event->nama_event}}</a></td>
+                                        <td>{{$t->tiket->jenis_tiket}}</td>
+                                        <td>Rp. {{$t->tiket->harga_tiket}}</td>
+                                        <td>{{$t->jumlah_tiket}}</td>
+                                        <td>Rp. {{$t->total_harga}}</td>
+                                            @if ($t->tiket->event->status_event == 1)
+                                                <td>Event Sudah Dimulai</td>
+                                            @elseif($t->tiket->event->status_event == 2)
+                                                <td>Event Sudah Selesai</td>
+                                            @elseif($t->status == 1)
+                                                <td>Pembayaran Sedang Dikonfirmasi</td>
+                                            @elseif($t->status == 2)
+                                                <td>Pembayaran Berhasil Dikonfirmasi</td>
+                                            @elseif($t->status == 3)
+                                                <td>Pembayaran Gagal Dikonfirmasi</td>
+                                            @else
+                                            <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
+                                            @endif
                                         <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
-                                    @endswitch
-                                 
-                                </tr>
+                                        @else
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td><a href="/transaksi/delete/{{$t->id}}">Hapus pesanan</td>
+                                        @endif
+                                       
+                                  
+                                    </tr>
+                                
                                 @endforeach
                             </tbody>     
                         </table>  

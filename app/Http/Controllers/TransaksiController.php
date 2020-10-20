@@ -23,7 +23,7 @@ class TransaksiController extends Controller
      */
     public function create($id)
     {
-        $tiket = Tiket::where('id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
         return view('transaksi.create',compact('tiket'));
     }
 
@@ -121,6 +121,12 @@ class TransaksiController extends Controller
 
         return redirect('/cart');
      
+    }
+
+    public function delete($id){
+        $transaksi = Transaksi::where('id',$id)->first();
+        $transaksi->delete();
+        return redirect('/cart');
     }
 
     /**

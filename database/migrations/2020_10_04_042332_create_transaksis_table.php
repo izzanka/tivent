@@ -23,6 +23,8 @@ class CreateTransaksisTable extends Migration
             $table->string('bukti_pembayaran')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+
         });
     }
 

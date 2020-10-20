@@ -20,6 +20,8 @@ class CreateTiketsTable extends Migration
             $table->string('harga_tiket');
             $table->integer('jumlah_tiket');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
+
         });
     }
 

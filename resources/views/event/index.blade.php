@@ -41,19 +41,25 @@
                     <a href="/event/mulai/{{$events->id}}" class="btn btn-success btn-sm">Mulai Event</a>
                     <a href="/event/{{$events->id}}/edit" class="btn btn-primary btn-sm">Edit event</a>
                     <a href="/tiket/{{$events->id}}" class="btn btn-primary btn-sm">Tiket</a>
+                    <form action="/event/{{$events->id}}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm mt-3">delete event</button>
+                    </form>
                 @elseif($events->status_event == 1)
                     <small class="text-success">Event Sedang Dimulai</small><br>
                     <a href="/event/selesai/{{$events->id}}" class="btn btn-danger btn-sm">Event Selesai</a>
                 @elseif($events->status_event == 2)
                     <small class="text-danger">Event Sudah Selesai</small><br>
+                    <form action="/event/{{$events->id}}" method="post">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm mt-3">delete event</button>
+                    </form>
                 @endif
 
                 <br>
-                <form action="/event/{{$events->id}}" method="post">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-sm mt-3">delete event</button>
-                </form>
+            
 
                 
             </div>

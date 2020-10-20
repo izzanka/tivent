@@ -70,7 +70,7 @@
                                             <td>:</td>
                                             <td>
                                             <div class="form-group">
-                                            <input type="number" class="form-control" name="jumlah_tiket" value="{{$tiket->jumlah_tiket}}">
+                                            <input type="number" class="form-control" name="jumlah_tiket" value="{{$tiket->jumlah_tiket}}" min="1">
                                             </div>
                                             <button type="submit" class="btn btn-primary float-right mt-3"> Edit Tiket</button>
 

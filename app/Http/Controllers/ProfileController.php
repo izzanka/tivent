@@ -117,22 +117,23 @@ class ProfileController extends Controller
         $user = User::where('id',$id)->first();
         $transaksi = Transaksi::where('user_id',$user->id)->get();
         $event = Event::where('user_id',$user->id)->get();
+
         foreach($event as $events){
             $tiket = Tiket::where('event_id',$events->id)->get();
             if(Storage::exists('public/event/'.$events->foto_event) && Storage::exists('public/identitas/'.$events->foto_identitas)){
                 Storage::delete(['public/event/'.$events->foto_event, 'public/identitas/' . $events->foto_identitas]);            
             }
+            $tiket->each->delete();
         }
         foreach($transaksi as $transaksis){
             if(Storage::exists('public/bukti/'.$transaksis->bukti_pembayaran)){
                 Storage::delete(['public/bukti/'.$transaksis->bukti_pembayaran]);            
             }
+            $transaksi->each->forceDelete();
         }
-
-        $tiket->each->delete();
+        
         $event->each->delete();
-        $transaksi->each->delete();
-        $user->delete();
+        $user->forceDelete();
      
 
         return redirect('/login');

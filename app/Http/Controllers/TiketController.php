@@ -122,6 +122,6 @@ class TiketController extends Controller
     {
         $tiket = Tiket::where('id',$id)->first();
         $tiket->delete();
-        return redirect('/event');
+        return redirect()->back();
     }
 }

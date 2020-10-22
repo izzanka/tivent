@@ -13,33 +13,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => 'preventBackHistory'], function()
+{   
+    Auth::routes();
+    
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
 
+    Route::get('/detail/{id}','HomeController@detail');
 
-Auth::routes();
+    Route::get('/transaksi/create/{id}','TransaksiController@create');
+    Route::post('/transaksi/store/{id}', 'TransaksiController@store');
+    Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
+    Route::post('/transaksi/store/bukti/{id}' , 'TransaksiController@storebukti');
+    Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
+    Route::get('/transaksi/delete/{id}','TransaksiController@delete');
 
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index');
-Route::get('/detail/{id}','HomeController@detail');
+    Route::get('/cart','CartController@index');
 
-Route::get('/transaksi/create/{id}','TransaksiController@create');
-Route::post('/transaksi/store/{id}', 'TransaksiController@store');
-Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
-Route::post('/transaksi/store/bukti/{id}' , 'TransaksiController@storebukti');
-Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
-Route::get('/transaksi/delete/{id}','TransaksiController@delete');
+    Route::get('/event/mulai/{id}', 'EventController@mulai');
+    Route::get('/event/selesai/{id}', 'EventController@selesai');
+    Route::resource('event','EventController');
 
-Route::get('/cart','CartController@index');
+    Route::get('tiket/create/{id}', 'TiketController@create');
+    Route::resource('tiket','TiketController');
 
-Route::get('/event/mulai/{id}', 'EventController@mulai');
-Route::get('/event/selesai/{id}', 'EventController@selesai');
-Route::resource('event','EventController');
+    Route::resource('profile','ProfileController');
 
-Route::get('tiket/create/{id}', 'TiketController@create');
-Route::resource('tiket','TiketController');
+    Route::group(['Middleware' => ['CheckRole:admin']], function(){
+        Route::resource('admin','AdminController');
+    });
 
-Route::resource('profile','ProfileController');
-
-
-Route::group(['Middleware' => ['CheckRole:admin']], function(){
-    Route::resource('admin','AdminController');
 });

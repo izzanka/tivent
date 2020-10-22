@@ -43,10 +43,9 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_event' => 'required',
-            'jenis_tiket' => 'required',
-            'harga_tiket' => 'required',
-            'jumlah_tiket' => 'required',
+            'jenis_tiket' => 'required|string|alpha_dash',
+            'harga_tiket' => 'required|numeric',
+            'jumlah_tiket' => 'required|numeric',
         ]);
         
         $id = $request->id_event;
@@ -98,9 +97,9 @@ class TiketController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'jenis_tiket' => 'required',
-            'harga_tiket' => 'required',
-            'jumlah_tiket' => 'required',
+            'jenis_tiket' => 'required|string|alpha_dash',
+            'harga_tiket' => 'required|numeric',
+            'jumlah_tiket' => 'required|numeric',
         ]);
         
         $tiket = Tiket::where('id',$id)->first();

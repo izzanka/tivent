@@ -24,7 +24,11 @@
         <div class="col-md-4 mt-4">
             <div class="card">
             @php
-                $path = Storage::url('event/'.$events->foto_event);
+                if(Storage::exists('public/event/'.$events->foto_event)){
+                    $path = Storage::url('event/'.$events->foto_event);
+                }else{
+                     $path = Storage::url('default.jpg');
+                }   
             @endphp
             <img src="{{ url($path) }}" class="card-img-top">
             <div class="card-body">

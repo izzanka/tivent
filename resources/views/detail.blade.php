@@ -20,7 +20,11 @@
                     <div class="row">
                         <div class="col-md-6">
                         @php
-                            $path = Storage::url('event/'.$event->foto_event);
+                            if(Storage::exists('public/event/'.$event->foto_event)){
+                                $path = Storage::url('event/'.$event->foto_event);
+                            }else{
+                                $path = Storage::url('default.jpg');
+                            }   
                         @endphp
                             <img src="{{url($path)}}" width="100%">
                         </div>
@@ -105,9 +109,9 @@
                                         <td>
                                         
                                             @if ($event->status_event == 1)
-                                                <a href="" class="text-success">Event Sedang Dimulai</a>
+                                                <a href="#" class="text-success">Event Sedang Dimulai</a>
                                             @elseif($event->status_event == 2)
-                                                <a href="" class="text-danger">Event Sudah Selesai</a>
+                                                <a href="#" class="text-danger">Event Sudah Selesai</a>
                                             @else
                                                 @foreach ($tiket as $tikets)
                                                     @if ($tikets->jumlah_tiket == 0)

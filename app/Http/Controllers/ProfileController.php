@@ -83,27 +83,48 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'string|max:255',
-            'email' => 'string|max:255|email',
-            'nomor_rekening' => 'max:15',
-            'password' => 'string|min:4|confirmed',
-        ]);
-
         $user = User::where('id',Auth::user()->id)->first();
-        if(!empty($request->password)){
-            $user->name = $user->name;
-            $user->email = $user->email;
-            $user->nomor_rekening = $user->nomor_rekening;
-            $user->password = Hash::make($request['password']);
+        
+        if(Auth::user()->email == $request->email){
+            $request->validate([
+                'name' => 'string|max:255|alpha_dash',
+                'nomor_rekening' => 'max:15|min:10',
+                'password' => 'string|min:4|confirmed',
+            ]);
+            if(!empty($request->password)){
+                $user->password = Hash::make($request['password']);
+                $user->update();
+                return redirect('/profile');
+            }
+            $user->name = $request->name;
+            $user->nomor_rekening = $request->nomor_rekening;
             $user->update();
             return redirect('/profile');
         }
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->nomor_rekening = $request->nomor_rekening;
-        $user->update();
-        return redirect('/profile');
+
+        else{
+            $request->validate([
+                'name' => 'string|max:255|alpha_dash',
+                'email' => 'string|max:255|email:rfc,dns|unique:users',
+                'nomor_rekening' => 'max:15|min:10',
+                'password' => 'string|min:4|confirmed',
+            ]);
+
+            if(!empty($request->password)){
+                $user->password = Hash::make($request['password']);
+                $user->update();
+                return redirect('/profile');
+            }
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->nomor_rekening = $request->nomor_rekening;
+            $user->update();
+            return redirect('/profile');
+        }
+
+
+    
     }
 
     /**

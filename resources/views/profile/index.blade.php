@@ -33,7 +33,7 @@
                                
                                 <div class="col-8 mb-4">
                                     <label >Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{$user->email}}" name="email" >
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{$user->email}}" name="email" >
                                 @error('email')
                                 <span class="error text-danger">{{$message}}</span>
                                 @enderror
@@ -41,7 +41,7 @@
 
                                 <div class="col-8 mb-4">
                                     <label >Nomor Rekening</label>
-                                <input type="text" class="form-control @error('nomor_rekening') is-invalid @enderror" value="{{$user->nomor_rekening}}" name="nomor_rekening" >
+                                <input id="nomor_rekening" type="number" class="form-control @error('nomor_rekening') is-invalid @enderror" value="{{$user->nomor_rekening}}" name="nomor_rekening" >
                                 @error('nomor_rekening')
                                 <span class="error text-danger">{{$message}}</span>
                                 @enderror

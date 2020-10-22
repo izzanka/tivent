@@ -56,14 +56,14 @@ class EventController extends Controller
     {
        
         $request->validate([
-            'nama_event' => 'required',
-            'deskripsi_event' => 'required',
+            'nama_event' => 'required|string|alpha_dash',
+            'deskripsi_event' => 'required|string|alpha_dash',
             'kategori_event' => 'required',
-            'tempat_event' => 'required',
+            'tempat_event' => 'required|string|alpha_dash',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
-            'foto_event' => 'required|image',
-            'foto_identitas' => 'required|image',
+            'foto_event' => 'required|image|max:2048',
+            'foto_identitas' => 'required|image|max:2048',
         ]);
 
         $check = Auth::user()->id;
@@ -125,7 +125,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        $event = Event::where('id',$id)->where('status_event',0)->first();
+        $event = Event::where('id',$id)->where('status_event',0)->firstOrFail();
         return view('event.edit', compact('event'));
     }
 
@@ -139,15 +139,17 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_event' => 'required',
-            'deskripsi_event' => 'required',
+            'nama_event' => 'required|string|alpha_dash',
+            'deskripsi_event' => 'required|string|alpha_dash',
             'kategori_event' => 'required',
-            'tempat_event' => 'required',
+            'tempat_event' => 'required|string|alpha_dash',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
+            'foto_event' => 'image|max:2048',
+            'foto_identitas' => 'image|max:2048',
         ]);
         $checktanggal = Carbon::today();
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         $event->nama_event = $request->nama_event;
         $event->deskripsi_event = $request->deskripsi_event;
         $event->kategori_event = $request->kategori_event;  

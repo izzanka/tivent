@@ -7,7 +7,11 @@
         <div class="col-md-4 mt-2">
             <div class="card">
                 @php
-                    $path = Storage::url('event/'.$events->foto_event);
+                    if(Storage::exists('public/event/'.$events->foto_event)){
+                        $path = Storage::url('event/'.$events->foto_event);
+                    }else{
+                        $path = Storage::url('default.jpg');
+                    }   
                 @endphp
                 <img src="{{ url($path) }}" class="card-img-top">
                 <div class="card-body">
@@ -24,7 +28,11 @@
                         <a href="/detail/{{$events->id}}">Detail Event</a>
                     @else
                         @if ($events->user_id == Auth::user()->id)
-                        <a href="/event/{{$events->id}}/edit">Edit Event</a>
+                            @if ($events->status_event == 1 || $events->status_event == 2)
+                                <a href="/event">Event</a>
+                            @else
+                                <a href="/event/{{$events->id}}/edit">Edit Event</a>
+                            @endif
                         @else
                         <a href="/detail/{{$events->id}}">Detail Event</a>
                         @endif

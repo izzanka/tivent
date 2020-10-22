@@ -20,7 +20,11 @@
                 <div class="card-body">
                     <div class="row">
                         @php
-                            $path = Storage::url('event/'.$tiket->event->foto_event);
+                         if(Storage::exists('public/event/'.$tiket->event->foto_event)){
+                                $path = Storage::url('event/'.$tiket->event->foto_event);
+                            }else{
+                                $path = Storage::url('default.jpg');
+                            }   
                         @endphp
                         <div class="col-md-6">
                         <img src="{{url($path)}}" width="100%">

@@ -3,8 +3,27 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                
+                <div class="card-body">
+                    Kategori : 
+                    <a href="/kategori/{{'konser'}}" class="mr-2">konser</a>|
+                    <a href="/kategori/{{'festival'}}" class="mr-2">festival</a>|
+                    <a href="/kategori/{{'gaming'}}" class="mr-2">gaming</a>|
+                    <a href="/kategori/{{'fashion'}}" class="mr-2">fashion</a>|
+                    <a href="/kategori/{{'pameran'}}" class="mr-2">pameran</a>|
+                    <a href="/kategori/{{'olahraga'}}" class="mr-2">olahraga</a>|
+                    <a href="/kategori/{{'pendidikan'}}" class="mr-2">pendidikan</a>|
+                    <a href="/kategori/{{'budaya'}}" class="mr-2">budaya</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    
         @foreach($event as $events)
-        <div class="col-md-4 mt-2">
+        <div class="col-md-3 mt-4">
             <div class="card">
                 @php
                     if(Storage::exists('public/event/'.$events->foto_event)){
@@ -40,12 +59,17 @@
                     </p>          
                 </div>
             </div>
-        </div>
+        </div>  
         @endforeach
+
+        
         
       
-
-
+     
+       
+    </div>
+    <div class="mt-4 float-right">
+        {{ $event->links() }}
     </div>
 </div>
 @endsection

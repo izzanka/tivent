@@ -31,7 +31,10 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+                    <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+                        <input class="form-control mr-sm-2" type="text" name="search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                      </form>
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
@@ -56,6 +59,9 @@
                             @if($check->role == 'admin')
                                 <li class="nav-item">
                                     <a class="nav-link" href="/admin">Incoming Order</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/allevent">All Event</a>
                                 </li>
                             @else
                                 <li class="nav-item">

@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
             
             <nav aria-label="breadcrumb" class="mt-3">
                 <ol class="breadcrumb">
@@ -70,6 +69,8 @@
                                                         <option value="fashion">fashion</option>
                                                         <option value="pameran">pameran</option>
                                                         <option value="olahraga">olahraga</option>
+                                                        <option value="pendidikan">Pendidikan</option>
+                                                        <option value="budaya">Budaya</option>
                                                     </select>
                                                 </div>
                                             </td>

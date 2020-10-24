@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="/event" class="btn btn-primary btn-sm"> Kembali</a>
 
             
             <nav aria-label="breadcrumb" class="mt-3">
@@ -22,7 +21,7 @@
 
     
         @foreach($tiket as $tikets)
-        <div class="col-md-4 mt-4">
+        <div class="col-md-3 mt-4">
             <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Jenis tiket : {{$tikets->jenis_tiket}}</h5>

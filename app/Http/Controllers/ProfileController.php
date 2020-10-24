@@ -88,7 +88,7 @@ class ProfileController extends Controller
         if(Auth::user()->email == $request->email){
             $request->validate([
                 'name' => 'string|max:255|alpha_dash',
-                'nomor_rekening' => 'max:15|min:10',
+                'nomor_rekening' => 'max:15|min:10|numeric',
                 'password' => 'string|min:4|confirmed',
             ]);
             if(!empty($request->password)){
@@ -105,8 +105,8 @@ class ProfileController extends Controller
         else{
             $request->validate([
                 'name' => 'string|max:255|alpha_dash',
-                'email' => 'string|max:255|email:rfc,dns|unique:users',
-                'nomor_rekening' => 'max:15|min:10',
+                'email' => 'string|max:255|email:rfc,dns,strict,spoof,filter|unique:users',
+                'nomor_rekening' => 'max:15|min:10|numeric',
                 'password' => 'string|min:4|confirmed',
             ]);
 

@@ -19,7 +19,8 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
-
+    Route::get('/search','HomeController@search');
+    Route::get('/kategori/{kategori}', 'HomeController@kategori');
     Route::get('/detail/{id}','HomeController@detail');
 
     Route::get('/transaksi/create/{id}','TransaksiController@create');
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::resource('profile','ProfileController');
 
     Route::group(['Middleware' => ['CheckRole:admin']], function(){
-        Route::resource('admin','AdminController');
+        Route::get('/admin','AdminController@index');
     });
 
 });

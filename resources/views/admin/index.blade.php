@@ -40,37 +40,50 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($transaksi as $t)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$t->user->name}}</td>
-                                <td>{{$t->tiket->event->nama_event}}</td>
-                                <td>{{$t->tiket->event->user->name}}</td>
-                                <td>{{$t->tiket->jenis_tiket}}</td>
-                                <td>Rp. {{$t->tiket->harga_tiket}}</td>
-                                <td>{{$t->jumlah_tiket}}</td>
-                                <td>Rp. {{$t->total_harga}}</td>
-                                <td>{{$t->status}}</td>
-                                @php
-                                $path = Storage::url('bukti/'.$t->bukti_pembayaran);
-                                @endphp
-                                <td>
-                                    <img src="{{url($path)}}" width="100%">
-                                </td>
-                                <td>
-                                    <a href="/admin/{{$t->id}}/edit">Konfirmasi</a>
-                                    |
-                                    <a href="">Tidak Dapat Dikonfirmasi</a>
-                                    |
-                                    <a href="">Generate Tiket</a>
 
-                                </td>
-                            </tr>
-                            @endforeach
+                            @foreach($transaksi as $t)
+                        
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        @if($t->tiket)
+                                        <td><a href="/detail/{{$t->tiket->event->id}}">{{$t->tiket->event->nama_event}}</a></td>
+                                        <td>{{$t->tiket->jenis_tiket}}</td>
+                                        <td>Rp. {{$t->tiket->harga_tiket}}</td>
+                                        <td>{{$t->jumlah_tiket}}</td>
+                                        <td>Rp. {{$t->total_harga}}</td>
+                                            @if ($t->tiket->event->status_event == 1)
+                                                <td>Event Sudah Dimulai</td>
+                                            @elseif($t->tiket->event->status_event == 2)
+                                                <td>Event Sudah Selesai</td>
+                                            @elseif($t->status == 1)
+                                                <td>Pembayaran Sedang Dikonfirmasi</td>
+                                            @elseif($t->status == 2)
+                                                <td>Pembayaran Berhasil Dikonfirmasi</td>
+                                            @elseif($t->status == 3)
+                                                <td>Pembayaran Gagal Dikonfirmasi</td>
+                                            @else
+                                            <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
+                                            @endif
+                                        <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                        @else
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td>Tiket Dihapus</td>
+                                        <td><a href="/transaksi/delete/{{$t->id}}">Hapus pesanan</td>
+                                        @endif
+                                       
+                                  
+                                    </tr>
+                                
+                                @endforeach
+                           
                             
                         </tbody>
                     </table>
-                    </div>
+                </div>
              
 
             </div>

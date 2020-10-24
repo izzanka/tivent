@@ -43,7 +43,7 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_tiket' => 'required|string|alpha_dash',
+            'jenis_tiket' => 'required|string',
             'harga_tiket' => 'required|numeric',
             'jumlah_tiket' => 'required|numeric',
         ]);
@@ -54,7 +54,13 @@ class TiketController extends Controller
         $tiket = new Tiket;
         $tiket->event_id = $event->id;
         $tiket->jenis_tiket = $request->jenis_tiket;
-        $tiket->harga_tiket = $request->harga_tiket;
+        if($request->harga_tiket == 0){
+            $tiket->harga_tiket = "gratis";
+        }else{
+            $pajak = $request->harga_tiket * 0.05;
+            $total_harga = $request->harga_tiket + $pajak;
+            $tiket->harga_tiket = $total_harga;
+        }
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->save();
 
@@ -97,14 +103,20 @@ class TiketController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'jenis_tiket' => 'required|string|alpha_dash',
+            'jenis_tiket' => 'required|string',
             'harga_tiket' => 'required|numeric',
             'jumlah_tiket' => 'required|numeric',
         ]);
         
         $tiket = Tiket::where('id',$id)->first();
         $tiket->jenis_tiket = $request->jenis_tiket;
-        $tiket->harga_tiket = $request->harga_tiket;
+        if($request->harga_tiket == 0){
+            $tiket->harga_tiket = "gratis";
+        }else{
+            $pajak = $request->harga_tiket * 0.05;
+            $total_harga = $request->harga_tiket + $pajak;
+            $tiket->harga_tiket = $total_harga;
+        }
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->update();
 

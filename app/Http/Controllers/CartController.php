@@ -22,7 +22,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::where('user_id',Auth::user()->id)->where('kode_tiket',null)->orderBy('created_at','asc')->get();
+        $transaksi = Transaksi::where('user_id',Auth::user()->id)->where('kode_tiket',null)->latest()->get();
      
         return view('cart.index',compact('transaksi'));
     }

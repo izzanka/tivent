@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
             
             <nav aria-label="breadcrumb" class="mt-3">
                 <ol class="breadcrumb">
@@ -60,7 +59,7 @@
                                             <td>:</td>
                                             <td>
                                             <div class="form-group">
-                                            <input type="number" class="form-control" name="harga_tiket" placeholder="Rp.">
+                                            <input type="number" class="form-control" name="harga_tiket" placeholder="Rp." min="0">
                                             </div>
                                             </td>
                                         </tr>

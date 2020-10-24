@@ -21,7 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::all();
+        $transaksi = Transaksi::where('status',0)->get();
         return view('admin.index',compact('transaksi'));
     }
 

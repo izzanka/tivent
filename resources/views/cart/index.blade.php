@@ -3,9 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <a href="/home" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
-            
+        <div class="col-md-12">            
             <nav aria-label="breadcrumb" class="mt-3">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">Home</a></li>

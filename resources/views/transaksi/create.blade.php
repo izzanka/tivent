@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back</a>
             
             <nav aria-label="breadcrumb" class="mt-3">
                 <ol class="breadcrumb">

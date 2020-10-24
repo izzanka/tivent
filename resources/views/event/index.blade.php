@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="/home" class="btn btn-primary btn-sm"> Kembali</a>
 
             
             <nav aria-label="breadcrumb" class="mt-3">
@@ -21,7 +20,7 @@
 
     
         @foreach($event as $events)
-        <div class="col-md-4 mt-4">
+        <div class="col-md-3 mt-4">
             <div class="card">
             @php
                 if(Storage::exists('public/event/'.$events->foto_event)){

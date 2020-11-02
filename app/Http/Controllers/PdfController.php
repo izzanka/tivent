@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
 use App\Transaksi;
 use Auth;
+use PDF;
 
-class AdminController extends Controller
+class PdfController extends Controller
 {
     public function __construct()
     {
@@ -19,8 +18,11 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+        $transaksi = Transaksi::where('id',$id)->get();
+        $pdf = PDF::loadview('pdf.index',compact('transaksi'));
+        return $pdf->download('tivent-tiket.pdf');
     }
 
     /**
@@ -63,10 +65,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = Transaksi::where('id',$id)->first();
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/admin');
+        //
     }
 
     /**

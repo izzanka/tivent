@@ -18,8 +18,6 @@
             
         </div>
 
-
-    
         @foreach($tiket as $tikets)
         <div class="col-md-3 mt-4">
             <div class="card">
@@ -42,7 +40,9 @@
             </div>         
         </div>
         @endforeach
-
+        <div class="mt-4 float-right">
+            {{ $tiket->links() }}
+        </div>
         
          
     </div>

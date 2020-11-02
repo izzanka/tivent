@@ -57,19 +57,12 @@
                             @endphp
 
                             @if($check->role == 'admin')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin">Incoming Order</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/allevent">All Event</a>
-                                </li>
+                                <x-notif-order/>
+                                <x-notif-admin-event/>
                             @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/event">Event</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/cart">Cart</a>
-                                </li>
+                                <x-notif-tiket/>
+                                <x-notif-event/>
+                                <x-notif-cart/>
                             @endif
                            
                   

@@ -54,7 +54,11 @@ class TransaksiController extends Controller
             $transaksi->kode_tiket = null;
             $transaksi->total_harga = $request->jumlah_tiket * $tiket->harga_tiket;
             $transaksi->bukti_pembayaran = null;
-            $transaksi->status = 0;
+            if($tiket->harga_tiket == 0){
+                $transaksi->status = 1;
+            }else{
+                $transaksi->status = 0;
+            }
             $transaksi->save();
 
             $tiket->jumlah_tiket = $tiket->jumlah_tiket - $request->jumlah_tiket;
@@ -106,7 +110,7 @@ class TransaksiController extends Controller
     public function storebukti(Request $request, $id)
     {
         $request->validate([
-            'bukti_pembayaran' => 'required|image',
+            'bukti_pembayaran' => 'required|image|max:2048',
         ]);
 
         $transaksi = Transaksi::where('id',$id)->first();

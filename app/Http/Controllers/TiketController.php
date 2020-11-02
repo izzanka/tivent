@@ -54,13 +54,9 @@ class TiketController extends Controller
         $tiket = new Tiket;
         $tiket->event_id = $event->id;
         $tiket->jenis_tiket = $request->jenis_tiket;
-        if($request->harga_tiket == 0){
-            $tiket->harga_tiket = "gratis";
-        }else{
-            $pajak = $request->harga_tiket * 0.05;
-            $total_harga = $request->harga_tiket + $pajak;
-            $tiket->harga_tiket = $total_harga;
-        }
+        $pajak = $request->harga_tiket * 0.05;
+        $total_harga = $request->harga_tiket + $pajak;
+        $tiket->harga_tiket = $total_harga;
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->save();
 
@@ -75,7 +71,7 @@ class TiketController extends Controller
      */
     public function show($id)
     {
-       $tiket = Tiket::where('event_id',$id)->get();
+       $tiket = Tiket::where('event_id',$id)->paginate(8);
        $event = Event::where('id',$id)->first();
        return view('tiket.index',compact('tiket','event'));
     }
@@ -110,13 +106,9 @@ class TiketController extends Controller
         
         $tiket = Tiket::where('id',$id)->first();
         $tiket->jenis_tiket = $request->jenis_tiket;
-        if($request->harga_tiket == 0){
-            $tiket->harga_tiket = "gratis";
-        }else{
-            $pajak = $request->harga_tiket * 0.05;
-            $total_harga = $request->harga_tiket + $pajak;
-            $tiket->harga_tiket = $total_harga;
-        }
+        $pajak = $request->harga_tiket * 0.05;
+        $total_harga = $request->harga_tiket + $pajak;
+        $tiket->harga_tiket = $total_harga;
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->update();
 

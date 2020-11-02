@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Transaksi;
 use App\Tiket;
 use App\Event;
-use App\Transaksi;
 use Auth;
 
-class AdminController extends Controller
+class TiketCartController extends Controller
 {
     public function __construct()
     {
@@ -21,6 +21,8 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->where('status',2)->paginate(1);
+        return view('cart.tiketcart',compact('transaksi'));
     }
 
     /**
@@ -63,10 +65,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = Transaksi::where('id',$id)->first();
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/admin');
+        //
     }
 
     /**

@@ -69,7 +69,9 @@
             </div>         
         </div>
         @endforeach
-
+        <div class="mt-4 float-right">
+            {{ $event->links() }}
+        </div>
         
          
     </div>

@@ -22,8 +22,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::where('user_id',Auth::user()->id)->where('kode_tiket',null)->latest()->get();
-     
+        $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->paginate(6);
         return view('cart.index',compact('transaksi'));
     }
 

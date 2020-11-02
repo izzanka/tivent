@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
 use App\Transaksi;
+use Illuminate\Support\Collection;
+
 use Auth;
 
-class AdminController extends Controller
+class OrderController extends Controller
 {
     public function __construct()
     {
@@ -21,6 +23,8 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $transaksi = Transaksi::latest()->where('status',1)->get();
+        return view('admin.cart',compact('transaksi'));
     }
 
     /**
@@ -63,10 +67,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = Transaksi::where('id',$id)->first();
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/admin');
+        //
     }
 
     /**
@@ -90,5 +91,18 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function konfirmasi($id){
+        $transaksi = Transaksi::where('id',$id)->firstOrFail();
+        for($i = 0; $i < $transaksi->jumlah_tiket; $i++){
+            $kode = Str::random(10);
+            $kode_tiket[] = $kode;
+        }
+        $list = implode(",", $kode_tiket);
+        $transaksi->kode_tiket = $list;
+        $transaksi->status = 2;
+        $transaksi->update();
+        return redirect('/cartadmin');
     }
 }

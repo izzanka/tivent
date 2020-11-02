@@ -25,7 +25,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = Event::where('user_id',Auth::user()->id)->get();
+        $event = Event::where('user_id',Auth::user()->id)->paginate(4);
         return view('event.index',compact('event'));
     }
 
@@ -56,10 +56,10 @@ class EventController extends Controller
     {
        
         $request->validate([
-            'nama_event' => 'required|string|alpha_dash',
-            'deskripsi_event' => 'required|string|alpha_dash',
+            'nama_event' => 'required|string',
+            'deskripsi_event' => 'required|string',
             'kategori_event' => 'required',
-            'tempat_event' => 'required|string|alpha_dash',
+            'tempat_event' => 'required|string',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
             'foto_event' => 'required|image|max:2048',
@@ -139,10 +139,10 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_event' => 'required|string|alpha_dash',
-            'deskripsi_event' => 'required|string|alpha_dash',
+            'nama_event' => 'required|string',
+            'deskripsi_event' => 'required|string',
             'kategori_event' => 'required',
-            'tempat_event' => 'required|string|alpha_dash',
+            'tempat_event' => 'required|string',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
             'foto_event' => 'image|max:2048',
@@ -193,8 +193,6 @@ class EventController extends Controller
         }
         $tiket->each->delete();
         $event->delete();
-  
-       
         return redirect('/event');
     }
 

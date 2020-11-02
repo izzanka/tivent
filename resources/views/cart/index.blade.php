@@ -47,24 +47,29 @@
                                         <td>Rp. {{$t->total_harga}}</td>
                                             @if ($t->tiket->event->status_event == 1)
                                                 <td>Event Sudah Dimulai</td>
+                                                <td><a href="/transaksi/delete/{{$t->id}}">Hapus</td>
                                             @elseif($t->tiket->event->status_event == 2)
                                                 <td>Event Sudah Selesai</td>
+                                                <td><a href="/transaksi/delete/{{$t->id}}">Hapus</td>
                                             @elseif($t->status == 1)
                                                 <td>Pembayaran Sedang Dikonfirmasi</td>
+                                                <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
                                             @elseif($t->status == 2)
-                                                <td>Pembayaran Berhasil Dikonfirmasi</td>
+                                                <td>Pembayaran Berhasil Dikonfirmasi | <a href="/tiketcart"> Check Tiket</a></td>
+                                                <td><a href="/transaksi/delete/{{$t->id}}">Hapus</td>
                                             @elseif($t->status == 3)
                                                 <td>Pembayaran Gagal Dikonfirmasi</td>
+                                                <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
                                             @else
                                             <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
+                                            <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
                                             @endif
-                                        <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
                                         @else
                                         <td>Tiket Dihapus</td>
                                         <td>Tiket Dihapus</td>
                                         <td>Tiket Dihapus</td>
-                                        <td>Tiket Dihapus</td>
-                                        <td>Tiket Dihapus</td>
+                                        <td>{{$t->jumlah_tiket}}</td>
+                                        <td>{{$t->total_harga}}</td>
                                         <td>Tiket Dihapus</td>
                                         <td><a href="/transaksi/delete/{{$t->id}}">Hapus pesanan</td>
                                         @endif

@@ -27,11 +27,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
+                                <th>Nama Pemesan</th>
                                 <th>Nama Event</th>
                                 <th>Penyelenggara</th>
                                 <th>Jenis Tiket</th>
-                                <th>Harga Tiket</th>
                                 <th>Jumlah Tiket</th>
                                 <th>Total Harga</th>
                                 <th>Status</th>
@@ -46,9 +45,10 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         @if($t->tiket)
+                                        <td>{{$t->user->name}}</td>
                                         <td><a href="/detail/{{$t->tiket->event->id}}">{{$t->tiket->event->nama_event}}</a></td>
+                                        <td>{{$t->tiket->event->user->name}}</td>
                                         <td>{{$t->tiket->jenis_tiket}}</td>
-                                        <td>Rp. {{$t->tiket->harga_tiket}}</td>
                                         <td>{{$t->jumlah_tiket}}</td>
                                         <td>Rp. {{$t->total_harga}}</td>
                                             @if ($t->tiket->event->status_event == 1)
@@ -64,15 +64,29 @@
                                             @else
                                             <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
                                             @endif
-                                        <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</td>
+                                        @php
+                                            if(Storage::exists('public/bukti/'.$t->bukti_pembayaran)){
+                                                $path = Storage::url('bukti/'.$t->bukti_pembayaran);
+                                            }else{
+                                                $path = Storage::url('default.jpg');
+                                            }   
+                                        @endphp
+                                        <td> <img src="{{ url($path) }}" width="200px" height="200px"></td>
+                                        <td>
+                                            <a href="/order/konfirmasi/{{$t->id}}">Berhasil Dikonfirmasi |</a>
+                                            <a href="">Gagal Dikonfirmasi |</a>
+                                            <a href="">Batalkan pesanan</a>
+                                     
+                                        </td>
                                         @else
+                                        <td>{{$t->user->name}}</td>
                                         <td>Tiket Dihapus</td>
                                         <td>Tiket Dihapus</td>
                                         <td>Tiket Dihapus</td>
-                                        <td>Tiket Dihapus</td>
-                                        <td>Tiket Dihapus</td>
-                                        <td>Tiket Dihapus</td>
-                                        <td><a href="/transaksi/delete/{{$t->id}}">Hapus pesanan</td>
+                                        <td>{{$t->jumlah_tiket}}</td>
+                                        <td>{{$t->total_harga}}</td>
+                                        <td><img src="{{ url($path) }}"></td>
+                                        <td><a href="">Hapus pesanan</td>
                                         @endif
                                        
                                   

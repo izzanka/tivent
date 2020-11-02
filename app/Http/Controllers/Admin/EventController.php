@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
-use App\Transaksi;
 use Auth;
+use App\Event;
+use App\User;
+use App\Tiket;
 
-class AdminController extends Controller
+class EventController extends Controller
 {
     public function __construct()
     {
@@ -21,6 +22,9 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $event = Event::withTrashed()->latest()->paginate(4);
+        $tiket = Tiket::all();
+        return view('event.allevent',compact('event','tiket'));
     }
 
     /**
@@ -63,10 +67,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = Transaksi::where('id',$id)->first();
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/admin');
+        //
     }
 
     /**

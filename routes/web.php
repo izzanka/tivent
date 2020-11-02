@@ -23,6 +23,8 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::get('/kategori/{kategori}', 'HomeController@kategori');
     Route::get('/detail/{id}','HomeController@detail');
 
+    Route::get('/tiketcart','TiketCartController@index');
+
     Route::get('/transaksi/create/{id}','TransaksiController@create');
     Route::post('/transaksi/store/{id}', 'TransaksiController@store');
     Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
@@ -31,6 +33,8 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::get('/transaksi/delete/{id}','TransaksiController@delete');
 
     Route::get('/cart','CartController@index');
+
+    Route::get('/pdf/cetak/{id}','PdfController@index');
 
     Route::get('/event/mulai/{id}', 'EventController@mulai');
     Route::get('/event/selesai/{id}', 'EventController@selesai');
@@ -42,7 +46,9 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::resource('profile','ProfileController');
 
     Route::group(['Middleware' => ['CheckRole:admin']], function(){
-        Route::get('/admin','AdminController@index');
+        Route::get('/cartadmin','Admin\OrderController@index');
+        Route::get('/allevent','Admin\EventController@index');
+        Route::get('/order/konfirmasi/{id}', 'Admin\OrderController@konfirmasi');
     });
 
 });

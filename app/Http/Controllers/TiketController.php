@@ -30,7 +30,7 @@ class TiketController extends Controller
      */
     public function create($id)
     {
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         return view('tiket.create',compact('event'));
     }
 
@@ -49,7 +49,7 @@ class TiketController extends Controller
         ]);
         
         $id = $request->id_event;
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
 
         $tiket = new Tiket;
         $tiket->event_id = $event->id;
@@ -72,7 +72,7 @@ class TiketController extends Controller
     public function show($id)
     {
        $tiket = Tiket::where('event_id',$id)->paginate(8);
-       $event = Event::where('id',$id)->first();
+       $event = Event::where('id',$id)->firstOrFail();
        return view('tiket.index',compact('tiket','event'));
     }
 
@@ -84,7 +84,7 @@ class TiketController extends Controller
      */
     public function edit($id)
     {
-        $tiket = Tiket::where('id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
         return view('tiket.edit',compact('tiket'));
         
     }
@@ -104,7 +104,7 @@ class TiketController extends Controller
             'jumlah_tiket' => 'required|numeric',
         ]);
         
-        $tiket = Tiket::where('id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
         $tiket->jenis_tiket = $request->jenis_tiket;
         $pajak = $request->harga_tiket * 0.05;
         $total_harga = $request->harga_tiket + $pajak;
@@ -123,7 +123,7 @@ class TiketController extends Controller
      */
     public function destroy($id)
     {
-        $tiket = Tiket::where('id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
         $tiket->delete();
         return redirect()->back();
     }

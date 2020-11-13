@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Transaksi;
-use Auth;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Http\Request;
+
+use App\Transaksi;
+use Auth;
+
 
 class TiketCartController extends Controller
 {

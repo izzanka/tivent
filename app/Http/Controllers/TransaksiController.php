@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 use Auth;
 use App\User;
 use App\Tiket;
 use App\Event;
 use App\Transaksi;
-use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
 {
@@ -38,10 +38,10 @@ class TransaksiController extends Controller
     {
        
         $request->validate([
-            'jumlah_tiket' => 'required|min:1',
+            'jumlah_tiket' => 'required|min:1|numeric',
         ]);
         
-        $tiket = Tiket::where('id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
 
         if($request->jumlah_tiket > $tiket->jumlah_tiket){
             return redirect()->back();
@@ -77,13 +77,15 @@ class TransaksiController extends Controller
      */
     public function cancel($id)
     {
-        $tiket = Tiket::where('id',$id)->first();
-        $transaksi = Transaksi::where('tiket_id',$id)->first();
+        $tiket = Tiket::where('id',$id)->firstOrFail();
+        $transaksi = Transaksi::where('tiket_id',$id)->firstOrFail();
 
         $kode = $transaksi->kode_tiket;
         $kode_tiket = explode(",",$kode);
         foreach ($kode_tiket as $k) {
-            Storage::delete(['public/qrcodes/'. $k .'.svg']);            
+            if(Storage::exists('public/qrcodes/'. $k .'.svg')){
+                Storage::delete(['public/qrcodes/'. $k .'.svg']);            
+            }
         }
 
         $tiket->jumlah_tiket += $transaksi->jumlah_tiket;
@@ -102,8 +104,8 @@ class TransaksiController extends Controller
      */
     public function createbukti($id)
     {
-        $transaksi = Transaksi::where('id',$id)->where('status',0)->first();
-        $rek = User::where('role','admin')->first();
+        $transaksi = Transaksi::where('id',$id)->where('status',0)->firstOrFail();
+        $rek = User::where('role','admin')->firstOrFail();
         return view('transaksi.createbukti',compact('transaksi','rek'));
     }
 
@@ -120,7 +122,7 @@ class TransaksiController extends Controller
             'bukti_pembayaran' => 'required|image|max:2048',
         ]);
 
-        $transaksi = Transaksi::where('id',$id)->first();
+        $transaksi = Transaksi::where('id',$id)->firstOrFail();
         if($request->hasFile('bukti_pembayaran')){
             $file = time() . '-' . $request->file('bukti_pembayaran')->getClientOriginalName();
             $path = $request->file('bukti_pembayaran')->storeAs('public/bukti',$file);
@@ -134,7 +136,14 @@ class TransaksiController extends Controller
     }
 
     public function delete($id){
-        $transaksi = Transaksi::withTrashed()->where('id',$id)->first();
+        $transaksi = Transaksi::where('id',$id)->firstOrFail();
+        $kode = $transaksi->kode_tiket;
+        $kode_tiket = explode(",",$kode);
+        foreach ($kode_tiket as $k) {
+            if(Storage::exists('public/qrcodes/'. $k .'.svg')){
+                Storage::delete(['public/qrcodes/'. $k .'.svg']);            
+            }
+        }
         $transaksi->delete();
         return redirect('/cart');
     }

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
-use App\Tiket;
-use App\Event;
-use App\Transaksi;
+use Auth;
 use App\User;
+use App\Transaksi;
+use App\Event;
+use App\Tiket;
 
 class ProfileController extends Controller
 {
@@ -135,7 +135,7 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('id',$id)->first();
+        $user = User::where('id',$id)->firstOrFail();
         $transaksi = Transaksi::where('user_id',$user->id)->get();
         $event = Event::where('user_id',$user->id)->get();
 
@@ -147,16 +147,26 @@ class ProfileController extends Controller
             $tiket->each->delete();
         }
         foreach($transaksi as $transaksis){
+            $kode = $transaksis->kode_tiket;
+            $kode_tiket = explode(",",$kode);
+
+            foreach ($kode_tiket as $k) {
+                if(Storage::exists('public/qrcodes/'. $k .'.svg')){
+                    Storage::delete(['public/qrcodes/'. $k .'.svg']);            
+                }
+            }
+
             if(Storage::exists('public/bukti/'.$transaksis->bukti_pembayaran)){
                 Storage::delete(['public/bukti/'.$transaksis->bukti_pembayaran]);            
             }
+
             $transaksi->each->forceDelete();
         }
-        
+
         $event->each->delete();
         $user->forceDelete();
      
 
-        return redirect('/login');
+        return redirect('/home');
     }
 }

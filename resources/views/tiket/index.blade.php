@@ -26,8 +26,6 @@
                 <p class="card-text">
                     Harga Tiket : {{$tikets->harga_tiket}}<br>
                     Jumlah Tiket : {{$tikets->jumlah_tiket}}<br>
-                    Jumlah Tiket terjual : <br>
-                    Pendapatan : <br>
                 </p>
                 
                 <form action="/tiket/{{$tikets->id}}" method="post">

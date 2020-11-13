@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Event;
 use App\Tiket;
 use App\Transaksi;
@@ -25,7 +24,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = Event::where('user_id',Auth::user()->id)->paginate(4);
+        $event = Event::latest()->where('user_id',Auth::user()->id)->paginate(4);
         return view('event.index',compact('event'));
     }
 
@@ -36,8 +35,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        $check = Auth::user()->id;
-        $user = User::where('id',$check)->first();
+        $user = User::where('id',Auth::user()->id)->firstOrFail();
         if($user->nomor_rekening == null){
             return view('profile.index',compact('user'));
         }else{
@@ -69,7 +67,7 @@ class EventController extends Controller
         $check = Auth::user()->id;
         $checktanggal = Carbon::today();
 
-        $user = User::where('id',$check)->first();
+        $user = User::where('id',$check)->firstOrFail();
 
         if($user->nomor_rekening == null){
             return view('profile.index',compact('user'));
@@ -159,14 +157,12 @@ class EventController extends Controller
             $event->tanggal_event = $request->tanggal_event;
         }
         if($request->hasFile('foto_event')){
-            $uuid = Str::uuid()->toString();
-            $file = $uuid . '-' . $request->file('foto_event')->getClientOriginalName();
+            $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
             $path = $request->file('foto_event')->storeAs('public/event',$file);
             $event->foto_event = $file;
         }
         if($request->hasFile('foto_identitas')){
-            $uuid = Str::uuid()->toString();
-            $file = $uuid . '-' . $request->file('foto_identitas')->getClientOriginalName();
+            $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
             $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
             $event->foto_identitas = $file;
         }
@@ -183,7 +179,7 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         $tiket = Tiket::where('event_id',$id)->get();
 
         if(Storage::exists('public/event/'.$event->foto_event) && Storage::exists('public/identitas/'.$event->foto_identitas)){
@@ -195,20 +191,16 @@ class EventController extends Controller
     }
 
     public function mulai($id){
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         $event->status_event = 1;
         $event->update();
-        
-
         return redirect('/event');
     }
 
     public function selesai($id){
-        $event = Event::where('id',$id)->first();
+        $event = Event::where('id',$id)->firstOrFail();
         $event->status_event = 2;
         $event->update();
- 
-
         return redirect('/event');
     }
 }

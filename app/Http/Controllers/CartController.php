@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
 use App\Transaksi;
 use Auth;
 
@@ -22,7 +20,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->whereIn('status',[0,1,2,3])->paginate(6);;
+        $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->whereIn('status',[0,1,2,3])->paginate(6);
         return view('cart.index',compact('transaksi'));
     }
 

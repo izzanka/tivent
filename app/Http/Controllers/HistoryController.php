@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
 use App\Transaksi;
 use Auth;
 

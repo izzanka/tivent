@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
-use App\User;
 use App\Tiket;
 
 class EventController extends Controller

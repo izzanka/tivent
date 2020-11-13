@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Transaksi;
 use Illuminate\Support\Collection;
 
+use App\Transaksi;
 
 class OrderController extends Controller
 {
@@ -92,7 +92,7 @@ class OrderController extends Controller
     public function konfirmasi($id){
         $transaksi = Transaksi::where('id',$id)->firstOrFail();
         for($i = 0; $i < $transaksi->jumlah_tiket; $i++){
-            $kode = Str::random(10);
+            $kode = Str::random(5);
             $kode_tiket[] = $kode;
         }
         $list = implode(",", $kode_tiket);

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::group(['middleware' => 'preventBackHistory'], function()
 {   
     Auth::routes();
@@ -33,6 +35,7 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::get('/transaksi/delete/{id}','TransaksiController@delete');
 
     Route::get('/cart','CartController@index');
+    Route::get('/history','HistoryController@index');
 
     Route::get('/pdf/cetak/{id}','PdfController@index');
 
@@ -45,10 +48,14 @@ Route::group(['middleware' => 'preventBackHistory'], function()
 
     Route::resource('profile','ProfileController');
 
-    Route::group(['Middleware' => ['CheckRole:admin']], function(){
+    Route::group(['middleware' => ['auth', 'checkRole:admin']],function(){
         Route::get('/cartadmin','Admin\OrderController@index');
         Route::get('/allevent','Admin\EventController@index');
+        Route::get('/allevent/delete/{id}','Admin\EventController@destroy');
+        Route::get('/order/history', 'Admin\HistoryController@index');
         Route::get('/order/konfirmasi/{id}', 'Admin\OrderController@konfirmasi');
+        Route::get('/order/gagalkonfirmasi/{id}','Admin\OrderController@gagalkonfirmasi');
+        Route::get('/order/cancel/{id}','Admin\OrderController@cancel');
     });
 
 });

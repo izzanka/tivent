@@ -4,17 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
 use App\Event;
 use App\User;
 use App\Tiket;
 
 class EventController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +20,7 @@ class EventController extends Controller
     {
         $event = Event::withTrashed()->latest()->paginate(4);
         $tiket = Tiket::all();
-        return view('event.allevent',compact('event','tiket'));
+        return view('admin.allevent',compact('event','tiket'));
     }
 
     /**
@@ -90,6 +86,8 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $event = Event::withTrashed()->where('id',$id)->first();
+        $event->forceDelete();
+        return redirect()->back();
     }
 }

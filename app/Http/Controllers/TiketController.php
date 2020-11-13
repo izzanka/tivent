@@ -43,7 +43,7 @@ class TiketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_tiket' => 'required|string',
+            'jenis_tiket' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'harga_tiket' => 'required|numeric',
             'jumlah_tiket' => 'required|numeric',
         ]);
@@ -99,7 +99,7 @@ class TiketController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'jenis_tiket' => 'required|string',
+            'jenis_tiket' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'harga_tiket' => 'required|numeric',
             'jumlah_tiket' => 'required|numeric',
         ]);

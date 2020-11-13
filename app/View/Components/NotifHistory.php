@@ -7,7 +7,7 @@ use App\Transaksi;
 use App\User;
 use Auth;
 
-class NotifCart extends Component
+class NotifHistory extends Component
 {
     /**
      * Create a new component instance.
@@ -26,7 +26,7 @@ class NotifCart extends Component
      */
     public function render()
     {
-        $notifcart = Transaksi::where('user_id',Auth::user()->id)->whereIn('status',[0,1,2,3])->get();
-        return view('components.notif-cart', compact('notifcart'));
+        $notifhistory = Transaksi::latest()->where('user_id',Auth::user()->id)->where('status',4)->get();
+        return view('components.notif-history',compact('notifhistory'));
     }
 }

@@ -98,10 +98,8 @@
                                         <td>Foto Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="foto_event" >
-     
+                                            <input type="file" class="form-control-file" name="foto_event">
                                         </td>                           
-                                            
                                     </tr>
                                     <tr>
                                    

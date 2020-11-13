@@ -24,7 +24,8 @@
             @if ($t->tiket)
             <div class="card-header">
                 {{$t->tiket->event->nama_event}}
-                <a href="/pdf/cetak/{{$t->id}}" class="btn btn-primary float-right">Print</a>
+                <a href="/pdf/cetak/{{$t->id}}" class="btn btn-primary float-right ml-3">Print</a>
+                <a href="/transaksi/cancel/{{$t->tiket->id}}" class="btn btn-danger float-right">Cancel</a>
             </div>
                 <div class="card-body">
                     <div class="row">
@@ -37,10 +38,12 @@
                             <div class="col-sm-4 mt-2">
                                 <div class="card">
                                     <div class="card-body">
-                                    <h5 class="card-title">{{$t->tiket->jenis_tiket}}</h5>
+                                    <h5 class="float-right">{{$n++}}</h5>
                                     <p class="card-text">
-                                        Nomor : {{$n++}}<br>
-                                        Kode tiket : {{$kode_tiket[$i]}}<br>
+                                        {{$t->tiket->jenis_tiket}}<br>
+                                        {{$t->tiket->event->tempat_event}}<br>
+                                        {{$t->tiket->event->tanggal_event}}<br>
+                                        {{$t->tiket->event->waktu_event}}<br>
                                     </p>
                                     </div>
                                 </div>
@@ -65,10 +68,6 @@
                             <div class="card">
                                 <div class="card-body">
                                 <h5 class="card-title">Tiket sudah dihapus</h5>
-                                <p class="card-text">
-                                    Nomor : {{$n++}}<br>
-                                    Kode tiket : {{$kode_tiket[$i]}}<br>
-                                </p>
                                 </div>
                             </div>
                         </div>

@@ -16,8 +16,6 @@
             <h3 class="mb-1 float-left"> Event</h3>
             
         </div>
-
-
     
         @foreach($event as $events)
         <div class="col-md-3 mt-4">
@@ -51,9 +49,11 @@
                     </form>
                 @elseif($events->status_event == 1)
                     <small class="text-success">Event Sedang Dimulai</small><br>
+                    <a href="/tiket/{{$events->id}}" class="btn btn-primary btn-sm">Tiket</a>
                     <a href="/event/selesai/{{$events->id}}" class="btn btn-danger btn-sm">Event Selesai</a>
                 @elseif($events->status_event == 2)
                     <small class="text-danger">Event Sudah Selesai</small><br>
+                    <a href="/tiket/{{$events->id}}" class="btn btn-primary btn-sm">Tiket</a>
                     <form action="/event/{{$events->id}}" method="post">
                         @method('DELETE')
                         @csrf

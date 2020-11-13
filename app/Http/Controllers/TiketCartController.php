@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaksi;
-use App\Tiket;
-use App\Event;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TiketCartController extends Controller
 {
@@ -22,6 +22,13 @@ class TiketCartController extends Controller
     public function index()
     {
         $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->where('status',2)->paginate(1);
+        foreach($transaksi as $t){
+            $kode = $t->kode_tiket;
+            $kode_tiket = explode(",",$kode);
+            for ($i = 0; $i < $t->jumlah_tiket; $i++) { 
+                QrCode::size(100)->generate($kode_tiket[$i], '../public/storage/qrcodes/' . $kode_tiket[$i] . '.svg');
+            }
+        }
         return view('cart.tiketcart',compact('transaksi'));
     }
 

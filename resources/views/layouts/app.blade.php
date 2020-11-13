@@ -58,11 +58,13 @@
 
                             @if($check->role == 'admin')
                                 <x-notif-order/>
+                                <x-notif-admin-history/>
                                 <x-notif-admin-event/>
                             @else
                                 <x-notif-tiket/>
                                 <x-notif-event/>
                                 <x-notif-cart/>
+                                <x-notif-history/>
                             @endif
                            
                   

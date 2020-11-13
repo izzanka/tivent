@@ -9,6 +9,7 @@ use App\User;
 use App\Tiket;
 use App\Event;
 use App\Transaksi;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiController extends Controller
 {
@@ -79,12 +80,18 @@ class TransaksiController extends Controller
         $tiket = Tiket::where('id',$id)->first();
         $transaksi = Transaksi::where('tiket_id',$id)->first();
 
+        $kode = $transaksi->kode_tiket;
+        $kode_tiket = explode(",",$kode);
+        foreach ($kode_tiket as $k) {
+            Storage::delete(['public/qrcodes/'. $k .'.svg']);            
+        }
+
         $tiket->jumlah_tiket += $transaksi->jumlah_tiket;
         $tiket->update();
-        
-        $transaksi->delete();
+        $transaksi->status = 4;
+        $transaksi->update();
 
-        return redirect('/cart');
+        return redirect('/history');
     }
 
     /**
@@ -115,8 +122,7 @@ class TransaksiController extends Controller
 
         $transaksi = Transaksi::where('id',$id)->first();
         if($request->hasFile('bukti_pembayaran')){
-            $uuid = Str::uuid()->toString();
-            $file = $uuid. '-' . $request->file('bukti_pembayaran')->getClientOriginalName();
+            $file = time() . '-' . $request->file('bukti_pembayaran')->getClientOriginalName();
             $path = $request->file('bukti_pembayaran')->storeAs('public/bukti',$file);
             $transaksi->bukti_pembayaran = $file;
         }
@@ -128,7 +134,7 @@ class TransaksiController extends Controller
     }
 
     public function delete($id){
-        $transaksi = Transaksi::where('id',$id)->first();
+        $transaksi = Transaksi::withTrashed()->where('id',$id)->first();
         $transaksi->delete();
         return redirect('/cart');
     }

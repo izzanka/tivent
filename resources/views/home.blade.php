@@ -21,7 +21,8 @@
                 
             </div>
         </div>
-    
+      
+
         @foreach($event as $events)
         <div class="col-md-3 mt-4">
             <div class="card">

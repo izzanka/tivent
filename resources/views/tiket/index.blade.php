@@ -25,7 +25,9 @@
                 <h5 class="card-title">Jenis tiket : {{$tikets->jenis_tiket}}</h5>
                 <p class="card-text">
                     Harga Tiket : {{$tikets->harga_tiket}}<br>
-                    Jumlah Tiket : {{$tikets->jumlah_tiket}}
+                    Jumlah Tiket : {{$tikets->jumlah_tiket}}<br>
+                    Jumlah Tiket terjual : <br>
+                    Pendapatan : <br>
                 </p>
                 
                 <form action="/tiket/{{$tikets->id}}" method="post">
@@ -33,8 +35,9 @@
                     @csrf
                     <button type="submit" class="btn btn-danger btn-sm">delete tiket</button>
                 </form>      
-
+                @if ($tikets->event->status_event == 0)
                 <a href="/tiket/{{$tikets->id}}/edit" class="btn btn-primary btn-sm">edit tiket</a>
+                @endif
                 
             </div>
             </div>         

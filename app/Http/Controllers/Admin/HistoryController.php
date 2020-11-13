@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Tiket;
-use App\Event;
+use App\User;
 use App\Transaksi;
-use Auth;
 
-class AdminController extends Controller
+class HistoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +17,8 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $transaksi = Transaksi::onlyTrashed()->latest()->get();
+        return view('admin.history',compact('transaksi'));
     }
 
     /**
@@ -63,10 +61,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $transaksi = Transaksi::where('id',$id)->first();
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/admin');
+        //
     }
 
     /**

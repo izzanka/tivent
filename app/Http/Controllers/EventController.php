@@ -56,10 +56,10 @@ class EventController extends Controller
     {
        
         $request->validate([
-            'nama_event' => 'required|string',
+            'nama_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'deskripsi_event' => 'required|string',
             'kategori_event' => 'required',
-            'tempat_event' => 'required|string',
+            'tempat_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
             'foto_event' => 'required|image|max:2048',
@@ -88,14 +88,12 @@ class EventController extends Controller
             }
             $event->status_event = 0;
             if($request->hasFile('foto_event')){
-                $uuid = Str::uuid()->toString();
-                $file = $uuid . '-' . $request->file('foto_event')->getClientOriginalName();
+                $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
                 $path = $request->file('foto_event')->storeAs('public/event',$file);
                 $event->foto_event = $file;
             }
             if($request->hasFile('foto_identitas')){
-                $uuid = Str::uuid()->toString();
-                $file = $uuid . '-' . $request->file('foto_identitas')->getClientOriginalName();
+                $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
                 $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
                 $event->foto_identitas = $file;
             }
@@ -139,10 +137,10 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_event' => 'required|string',
+            'nama_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'deskripsi_event' => 'required|string',
             'kategori_event' => 'required',
-            'tempat_event' => 'required|string',
+            'tempat_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'waktu_event' => 'required',
             'tanggal_event' => 'required',
             'foto_event' => 'image|max:2048',
@@ -193,7 +191,7 @@ class EventController extends Controller
         }
         $tiket->each->delete();
         $event->delete();
-        return redirect('/event');
+        return redirect()->back();
     }
 
     public function mulai($id){

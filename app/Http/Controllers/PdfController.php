@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaksi;
-use Auth;
 use PDF;
 
 class PdfController extends Controller
@@ -20,9 +19,9 @@ class PdfController extends Controller
      */
     public function index($id)
     {
-        $transaksi = Transaksi::where('id',$id)->get();
+        $transaksi = Transaksi::withTrashed()->where('id',$id)->get();
         $pdf = PDF::loadview('pdf.index',compact('transaksi'));
-        return $pdf->download('tivent-tiket.pdf');
+        return $pdf->stream('tivent-tiket.pdf');
     }
 
     /**

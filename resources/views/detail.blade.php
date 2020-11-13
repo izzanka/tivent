@@ -102,11 +102,9 @@
                                             
                                     </tr>
                                     <tr>
-                                   
                                         <td>Jenis Tiket Yang Tersedia</td>
                                         <td>:</td>
                                         <td>
-                                        
                                             @if ($event->status_event == 1)
                                                 <a href="#" class="text-success">Event Sedang Dimulai</a>
                                             @elseif($event->status_event == 2)
@@ -123,7 +121,8 @@
                                          
                                         </td>                           
                                             
-                                    </tr>            
+                                    </tr>
+                                            
                                 </tbody>
                             </table>
                   

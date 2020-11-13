@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Tiket;
+use App\Event;
 use App\Transaksi;
-use Illuminate\Support\Collection;
+use Auth;
 
-
-class OrderController extends Controller
+class HistoryController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +21,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::latest()->where('status',1)->get();
-        return view('admin.cart',compact('transaksi'));
+        $transaksi = Transaksi::latest()->where('user_id',Auth::user()->id)->where('status',4)->get();
+        return view('history.index',compact('transaksi'));
+
     }
 
     /**
@@ -87,25 +90,5 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function konfirmasi($id){
-        $transaksi = Transaksi::where('id',$id)->firstOrFail();
-        for($i = 0; $i < $transaksi->jumlah_tiket; $i++){
-            $kode = Str::random(10);
-            $kode_tiket[] = $kode;
-        }
-        $list = implode(",", $kode_tiket);
-        $transaksi->kode_tiket = $list;
-        $transaksi->status = 2;
-        $transaksi->update();
-        return redirect('/cartadmin');
-    }
-
-    public function gagalkonfirmasi($id){
-        $transaksi = Transaksi::where('id',$id)->firstOrFail();
-        $transaksi->status = 3;
-        $transaksi->update();
-        return redirect('/cartadmin');
     }
 }

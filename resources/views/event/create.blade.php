@@ -98,7 +98,7 @@
                                         <td>Foto Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="foto_event">
+                                            <input type="file" class="form-control-file" name="foto_event" accept="image/*">
                                         </td>                           
                                     </tr>
                                     <tr>
@@ -106,7 +106,7 @@
                                         <td>Upload Foto Dengan Ktp </td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="foto_identitas">
+                                            <input type="file" class="form-control-file" name="foto_identitas" accept="image/*">
                                             <br>
                                             <button type="submit" class="btn btn-primary float-right mt-3"> Tambah Event</button>
 

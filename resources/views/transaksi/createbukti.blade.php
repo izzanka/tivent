@@ -41,7 +41,7 @@
                                         <td>Upload Foto Bukti Pembayaran </td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="bukti_pembayaran">
+                                            <input type="file" class="form-control-file" name="bukti_pembayaran" accept="image/*">
                                             <br>
                                             <button type="submit" class="btn btn-primary float-right mt-3"> Upload</button>
 

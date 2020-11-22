@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('nomor_rekening',15)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

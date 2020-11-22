@@ -17,7 +17,7 @@
         <div class="col-md-7">
             <div class="card mb-3">
                 <div class="card-body">
-                    <form action="/profile/{{$user->id}}" method="post">
+                    <form action="/profile/{{$user->id}}" method="post" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <div class="container">
@@ -44,6 +44,10 @@
                                 @error('nomor_rekening')
                                 <span class="error text-danger">{{$message}}</span>
                                 @enderror
+                                </div>
+                                <div class="col-8 mb-4">
+                                    <label >Foto Profile</label>
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
                                 </div>
                                 
                             </div>
@@ -73,28 +77,29 @@
                                     <label >Confirm New Password</label>
                                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" placeholder="Confirm Password">
                                 </div>
+                               
                             </div>
-                            <button class="btn btn-primary float-right">Save</button>
+                            <button class="btn btn-primary float-right mb-3">Save</button>
                         </div>
                     </form>
-
+                </div>
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h6 class="float-left">Delete Account</h6><br>
+                            <h6 class="float-left text-danger">Once your account is deleted, all of its resources and data will be permanently deleted</h6>
+                                <form action="/profile/{{$user->id}}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger float-right" type="submit">DELETE ACCOUNT</button>
+                                </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="float-left">Delete Account</h6><br>
-                    <h6 class="float-left text-danger">Once your account is deleted, all of its resources and data will be permanently deleted</h6>
-                        <form action="/profile/{{$user->id}}" method="post">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn-danger float-right" type="submit">DELETE ACCOUNT</button>
-                        </form>
-                </div>
-            </div>
-        </div>
+       
 
         
         

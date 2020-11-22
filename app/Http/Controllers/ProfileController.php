@@ -90,6 +90,7 @@ class ProfileController extends Controller
                 'name' => 'string|max:255|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
                 'nomor_rekening' => 'max:15|min:10',
                 'password' => 'string|min:4|confirmed',
+                'image' => 'image|max:2048',
             ]);
             if(!empty($request->password)){
                 $user->password = Hash::make($request['password']);
@@ -98,6 +99,11 @@ class ProfileController extends Controller
             }
             $user->name = $request->name;
             $user->nomor_rekening = $request->nomor_rekening;
+            if($request->hasFile('image')){
+                $file = time() . '-' . $request->file('image')->getClientOriginalName();
+                $path = $request->file('image')->storeAs('public/foto_profile',$file);
+                $user->image = $file;
+            }
             $user->update();
             return redirect('/profile');
         }
@@ -108,6 +114,7 @@ class ProfileController extends Controller
                 'email' => 'string|max:255|email:rfc,strict,filter|unique:users',
                 'nomor_rekening' => 'max:15|min:10',
                 'password' => 'string|min:4|confirmed',
+                'image' => 'image|max:2048',
             ]);
 
             if(!empty($request->password)){
@@ -119,6 +126,11 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->nomor_rekening = $request->nomor_rekening;
+            if($request->hasFile('image')){
+                $file = time() . '-' . $request->file('image')->getClientOriginalName();
+                $path = $request->file('image')->storeAs('public/foto_profile',$file);
+                $user->image = $file;
+            }
             $user->update();
             return redirect('/profile');
         }

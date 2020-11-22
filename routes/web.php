@@ -30,7 +30,7 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::get('/transaksi/create/{id}','TransaksiController@create');
     Route::post('/transaksi/store/{id}', 'TransaksiController@store');
     Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
-    Route::post('/transaksi/store/bukti/{id}' , 'TransaksiController@storebukti');
+    Route::post('/transaksi/store/bukti/{id}', 'TransaksiController@storebukti');
     Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
     Route::get('/transaksi/delete/{id}','TransaksiController@delete');
 
@@ -51,6 +51,8 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::group(['middleware' => ['auth', 'checkRole:admin']],function(){
         Route::get('/cartadmin','Admin\OrderController@index');
         Route::get('/allevent','Admin\EventController@index');
+        Route::get('/checktiket','Admin\EventController@tiket');
+        Route::get('/checktiket/{kode}', 'Admin\EventController@checktiket');
         Route::get('/allevent/delete/{id}','Admin\EventController@destroy');
         Route::get('/order/history', 'Admin\HistoryController@index');
         Route::get('/order/konfirmasi/{id}', 'Admin\OrderController@konfirmasi');

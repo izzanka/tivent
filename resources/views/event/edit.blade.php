@@ -115,7 +115,7 @@
                                             <td>Foto Event </td>
                                             <td>:</td>
                                             <td>
-                                                <input type="file" class="form-control-file" name="foto_event">
+                                                <input type="file" class="form-control-file" name="foto_event" accept="image/*">
                                             </td>                           
                                                 
                                         </tr>
@@ -124,7 +124,7 @@
                                             <td>Upload Foto Dengan Ktp </td>
                                             <td>:</td>
                                             <td>
-                                                <input type="file" class="form-control-file" name="foto_identitas">
+                                                <input type="file" class="form-control-file" name="foto_identitas" accept="image/*">
                                                 <button type="submit" class="btn btn-primary float-right mt-3"><i class="fas fa-shopping-cart"></i> Edit Event</button>
                                             </td>                           
                                                 

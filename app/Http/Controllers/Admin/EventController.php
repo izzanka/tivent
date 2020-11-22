@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Event;
+use App\Transaksi;
 use App\Tiket;
 
 class EventController extends Controller
@@ -27,9 +29,17 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function checktiket($kode)
     {
-        //
+        $transaksi = Transaksi::all();
+        $check =  $transaksi->contains('kode_tiket',$kode);
+        if($check){
+            return redirect('/checktiket')->with('success','Kode Tiket Ditemukkan');
+        }else{
+            return redirect('/checktiket')->with('error','Kode Tiket Tidak Ditemukkan');
+        }
+      
+        
     }
 
     /**
@@ -38,9 +48,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function tiket()
     {
-        //
+        return view('admin.checktiket');
     }
 
     /**

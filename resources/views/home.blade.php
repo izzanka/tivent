@@ -31,9 +31,10 @@
                     $path = Storage::url('event/'.$events->foto_event);
                 }else{
                     $path = Storage::url('default.jpg');
-                }   
+                }
                 @endphp
-                <img src="{{ url($path) }}" class="card-img-top">
+
+                <img src="{{ $path }}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title text-uppercase font-weight-bold">{{$events->nama_event}}</h5>
                     <p class="card-text">

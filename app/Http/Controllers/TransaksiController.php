@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Session;
 use Auth;
 use App\User;
 use App\Tiket;
@@ -38,15 +38,18 @@ class TransaksiController extends Controller
     {
        
         $request->validate([
-            'jumlah_tiket' => 'required|min:1|numeric',
+            'jumlah_tiket' => 'required|min:1|numeric|max:35',
         ]);
         
         $tiket = Tiket::where('id',$id)->firstOrFail();
 
         if($request->jumlah_tiket > $tiket->jumlah_tiket){
+            Session::flash('error', "Jumlah Tiket Melebihi Stock!");
             return redirect()->back();
-        }elseif($tiket->event->status_event == 1 && 2)
+        }elseif($tiket->event->status_event == 1 && 2){
+            Session::flash('error', "Event Sudah Dimulai / Selesai!");
             return redirect()->back();
+        }
         else{
             $transaksi = new Transaksi;
             $transaksi->user_id = Auth::user()->id;
@@ -65,7 +68,7 @@ class TransaksiController extends Controller
             $tiket->jumlah_tiket = $tiket->jumlah_tiket - $request->jumlah_tiket;
             $tiket->update();
 
-            return redirect('/cart');
+            return redirect('/cart')->with('success','Pemesanan Berhasil!');
         }
     }
 
@@ -93,7 +96,7 @@ class TransaksiController extends Controller
         $transaksi->status = 4;
         $transaksi->update();
 
-        return redirect('/history');
+        return redirect('/history')->with('success','Pemesanan Berhasil Dibatalkan!');
     }
 
     /**
@@ -131,7 +134,7 @@ class TransaksiController extends Controller
         $transaksi->status = 1;
         $transaksi->update();
 
-        return redirect('/cart');
+        return redirect('/cart')->with('success','Bukti Pembayaran Berhasil Diupload!');
      
     }
 
@@ -145,7 +148,7 @@ class TransaksiController extends Controller
             }
         }
         $transaksi->delete();
-        return redirect('/cart');
+        return redirect('/cart')->with('success','Pemesanan Berhasil Dihapus!');
     }
 
     /**

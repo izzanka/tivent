@@ -34,12 +34,10 @@ class EventController extends Controller
         $transaksi = Transaksi::all();
         $check =  $transaksi->contains('kode_tiket',$kode);
         if($check){
-            return redirect('/checktiket')->with('success','Kode Tiket Ditemukkan');
+            return redirect('/checktiket')->with('success','Kode Tiket Valid');
         }else{
-            return redirect('/checktiket')->with('error','Kode Tiket Tidak Ditemukkan');
-        }
-      
-        
+            return redirect('/checktiket')->with('error','Kode Tiket Invalid');
+        } 
     }
 
     /**

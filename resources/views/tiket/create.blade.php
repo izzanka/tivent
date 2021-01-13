@@ -50,7 +50,13 @@
                                             <td>:</td>
                                             <td>
                                             <div class="form-group">
-                                            <input type="text" class="form-control" name="jenis_tiket">
+                                                <select name="jenis_tiket" id="jenis_tiket" class="form-control">
+                                                    <option value="" selected disabled>---</option>
+                                                    <option value="Regular">Regular</option>
+                                                    <option value="Premium">Premium</option>
+                                                    <option value="VIP">VIP</option>
+                                                    <option value="VVIP">VVIP</option>
+                                                </select>
                                             </div>
                                             </td>
                                         </tr>

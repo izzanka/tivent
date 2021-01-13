@@ -95,7 +95,7 @@ class ProfileController extends Controller
             if(!empty($request->password)){
                 $user->password = Hash::make($request['password']);
                 $user->update();
-                return redirect('/profile');
+                return redirect('/profile')->with('success','Profile Berhasil Diupdate!');;
             }
             $user->name = $request->name;
             $user->nomor_rekening = $request->nomor_rekening;
@@ -105,7 +105,7 @@ class ProfileController extends Controller
                 $user->image = $file;
             }
             $user->update();
-            return redirect('/profile');
+            return redirect('/profile')->with('success','Profile Berhasil Diupdate!');
         }
 
         else{
@@ -120,7 +120,7 @@ class ProfileController extends Controller
             if(!empty($request->password)){
                 $user->password = Hash::make($request['password']);
                 $user->update();
-                return redirect('/profile');
+                return redirect('/profile')->with('success','Profile Berhasil Diupdate!');;
             }
 
             $user->name = $request->name;
@@ -132,7 +132,7 @@ class ProfileController extends Controller
                 $user->image = $file;
             }
             $user->update();
-            return redirect('/profile');
+            return redirect('/profile')->with('success','Profile Berhasil Diupdate!');
         }
 
 
@@ -172,13 +172,13 @@ class ProfileController extends Controller
                 Storage::delete(['public/bukti/'.$transaksis->bukti_pembayaran]);            
             }
 
-            $transaksi->each->forceDelete();
+            $transaksi->each->delete();
         }
 
         $event->each->delete();
-        $user->forceDelete();
+        $user->delete();
      
 
-        return redirect('/home');
+        return redirect('/home')->with('success','User Berhasil Dihapus');
     }
 }

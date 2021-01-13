@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Session;
 use Auth;
 use App\Tiket;
 use App\Event;
@@ -60,7 +60,7 @@ class TiketController extends Controller
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->save();
 
-        return redirect('/event');
+        return redirect('/event')->with('success','Tiket Berhasil Ditambahkan!');
     }
 
     /**
@@ -112,7 +112,7 @@ class TiketController extends Controller
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->update();
 
-        return redirect('/event');
+        return redirect('/event')->with('success','Tiket Berhasil Diupdate!');
     }
 
     /**
@@ -125,6 +125,7 @@ class TiketController extends Controller
     {
         $tiket = Tiket::where('id',$id)->firstOrFail();
         $tiket->delete();
+        Session::flash('success', "Tiket Berhasil Dihapus!");
         return redirect()->back();
     }
 }

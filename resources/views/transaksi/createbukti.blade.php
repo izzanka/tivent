@@ -18,7 +18,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img src="" width="100%" height="100%">
+                            @php
+                            if(Storage::exists('public/event/'.$transaksi->tiket->event->foto_event)){
+                                $path = Storage::url('event/'.$transaksi->tiket->event->foto_event);
+                            }else{
+                                $path = Storage::url('default.jpg');
+                            }   
+                            @endphp
+                            <img src="{{url($path)}}" width="100%" height="100%">
                         </div>
                         <div class="col-md-6 mt-4">
                         <form action="/transaksi/store/bukti/{{$transaksi->id}}" method="post" enctype="multipart/form-data">

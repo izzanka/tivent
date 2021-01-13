@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Session;
 use App\Event;
 use App\Tiket;
 use App\Transaksi;
@@ -37,7 +38,7 @@ class EventController extends Controller
     {
         $user = User::where('id',Auth::user()->id)->firstOrFail();
         if($user->nomor_rekening == null){
-            return view('profile.index',compact('user'));
+            return view('profile.index',compact('user'))->with('error','Nomor Rekening Kosong!');
         }else{
             return view('event.create');
         }
@@ -80,6 +81,7 @@ class EventController extends Controller
             $event->tempat_event = $request->tempat_event;
             $event->waktu_event = $request->waktu_event;
             if($request->tanggal_event <= $checktanggal){
+                Session::flash('error', "Tanggal Invalid!");
                 return redirect()->back();
             }else{
                 $event->tanggal_event = $request->tanggal_event;
@@ -97,7 +99,7 @@ class EventController extends Controller
             }
             $event->save();
 
-            return redirect('/event');
+            return redirect('/event')->with('success','Event Berhasil Ditambahkan!');
         }
 
     }
@@ -152,6 +154,7 @@ class EventController extends Controller
         $event->tempat_event = $request->tempat_event;
         $event->waktu_event = $request->waktu_event;
         if($request->tanggal_event <= $checktanggal){
+            Session::flash('error', "Tanggal Invalid!");
             return redirect()->back();
         }else{
             $event->tanggal_event = $request->tanggal_event;
@@ -168,7 +171,7 @@ class EventController extends Controller
         }
         $event->update();
 
-        return redirect('/event');
+        return redirect('/event')->with('success','Event Berhasil Diupdate!');
     }
 
     /**
@@ -187,6 +190,7 @@ class EventController extends Controller
         }
         $tiket->each->delete();
         $event->delete();
+        Session::flash('success', "Event Berhasil Dihapus!");
         return redirect()->back();
     }
 
@@ -194,13 +198,13 @@ class EventController extends Controller
         $event = Event::where('id',$id)->firstOrFail();
         $event->status_event = 1;
         $event->update();
-        return redirect('/event');
+        return redirect('/event')->with('info','Event Dimulai!');
     }
 
     public function selesai($id){
         $event = Event::where('id',$id)->firstOrFail();
         $event->status_event = 2;
         $event->update();
-        return redirect('/event');
+        return redirect('/event')->with('info','Event Selesai!');
     }
 }

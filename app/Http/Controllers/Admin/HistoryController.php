@@ -17,7 +17,7 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaksi::onlyTrashed()->latest()->get();
+        $transaksi = Transaksi::latest()->get();
         return view('admin.history',compact('transaksi'));
     }
 

@@ -26,7 +26,7 @@ class NotifAdminHistory extends Component
      */
     public function render()
     {
-        $notifhistory = Transaksi::onlyTrashed()->latest()->get();
+        $notifhistory = Transaksi::latest()->get();
         return view('components.notif-admin-history',compact('notifhistory'));
     }
 }

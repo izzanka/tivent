@@ -19,7 +19,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             @php
-                            $path = Storage::url('event/'.$tiket->event->foto_event);
+                            if(Storage::exists('public/event/'.$tiket->event->foto_event)){
+                                $path = Storage::url('event/'.$tiket->event->foto_event);
+                            }else{
+                                $path = Storage::url('default.jpg');
+                            }   
                             @endphp
                             <img src="{{url($path)}}" width="100%" height="100%">
                         </div>
@@ -57,11 +61,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Jumlah Tiket Yang Dipesan</td>
+                                        <td>Jumlah Tiket Yang Ingin Dipesan</td>
                                         <td>:</td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" class="form-control" name="jumlah_tiket" min="1">
+                                                <input type="number" class="form-control" name="jumlah_tiket" min="1" max="35">
                                                 <button type="submit" class="btn btn-primary float-right mt-3"> Pesan Tiket</button>
                                             </div>
                                         </td>

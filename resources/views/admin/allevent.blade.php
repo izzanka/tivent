@@ -36,7 +36,7 @@
                         {{$events->tanggal_event}}<br>
                         @if ($events->deleted_at == null)
                         <hr>
-                        <form action="/event/{{$events->id}}" method="post">
+                        <form action="/allevent/delete/{{$events->id}}" method="post">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="btn btn-danger btn-sm mt-3">delete event</button>

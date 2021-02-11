@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Collection;
-use Illuminate\Http\Request;
-use App\Event;
 use App\Transaksi;
-use App\Tiket;
+use App\User;
+use Illuminate\Http\Request;
 
-class EventController extends Controller
+class CheckoutController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +15,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = Event::withTrashed()->latest()->paginate(4);
-        $tiket = Tiket::all();
-        return view('admin.allevent',compact('event','tiket'));
+        
     }
 
     /**
@@ -29,15 +23,9 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function checktiket($kode)
+    public function create()
     {
-        $transaksi = Transaksi::all();
-        $check =  $transaksi->contains('kode_tiket',$kode);
-        if($check){
-            return redirect('/checktiket')->with('success','Kode Tiket Valid');
-        }else{
-            return redirect('/checktiket')->with('error','Kode Tiket Invalid');
-        } 
+        //
     }
 
     /**
@@ -46,9 +34,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function tiket()
+    public function store(Request $request)
     {
-        return view('admin.checktiket');
+        //
     }
 
     /**
@@ -59,7 +47,11 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+        $transaksi = Transaksi::find($id);
+        if($transaksi->metode_pembayaran && $transaksi->bukti_pembayaran != null){
+            return redirect()->back();
+        }
+        return view('transaksi.checkout',compact('transaksi'));
     }
 
     /**
@@ -82,7 +74,13 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaksi = Transaksi::find($id);
+        $transaksi->metode_pembayaran = $request->check;
+        $transaksi->save();
+
+        $rek = User::where('role','admin')->firstOrFail();
+
+        return view('transaksi.createbukti',compact('transaksi','rek'));
     }
 
     /**
@@ -93,8 +91,6 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::find($id);
-        $event->forceDelete();
-        return redirect('/allevent')->with('success','Event Berhasil Dihapus!');
+        //
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Validator;
 use Session;
 use App\Event;
 use App\Tiket;
@@ -53,10 +54,12 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $checktanggal = Carbon::today();
+        $user = User::where('id',Auth::user()->id)->firstOrFail();
        
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'nama_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
-            'deskripsi_event' => 'required|string',
+            'deskripsi_event' => 'required',
             'kategori_event' => 'required',
             'tempat_event' => 'required|string|regex:/^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸÑÆŒa-zàâçéèêëîïôûùüÿñæœ0-9_.,() ]+$/',
             'waktu_event' => 'required',
@@ -65,41 +68,43 @@ class EventController extends Controller
             'foto_identitas' => 'required|image|max:2048',
         ]);
 
-        $check = Auth::user()->id;
-        $checktanggal = Carbon::today();
-
-        $user = User::where('id',$check)->firstOrFail();
-
-        if($user->nomor_rekening == null){
-            return view('profile.index',compact('user'));
+        if($validator->fails()){
+            return redirect()->back()
+                   ->withErrors($validator)
+                   ->withInput();
         }else{
-            $event = new Event;
-            $event->user_id = $user->id;
-            $event->nama_event = $request->nama_event;
-            $event->deskripsi_event = $request->deskripsi_event;
-            $event->kategori_event = $request->kategori_event;
-            $event->tempat_event = $request->tempat_event;
-            $event->waktu_event = $request->waktu_event;
-            if($request->tanggal_event <= $checktanggal){
-                Session::flash('error', "Tanggal Invalid!");
-                return redirect()->back();
-            }else{
-                $event->tanggal_event = $request->tanggal_event;
-            }
-            $event->status_event = 0;
-            if($request->hasFile('foto_event')){
-                $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
-                $path = $request->file('foto_event')->storeAs('public/event',$file);
-                $event->foto_event = $file;
-            }
-            if($request->hasFile('foto_identitas')){
-                $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
-                $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
-                $event->foto_identitas = $file;
-            }
-            $event->save();
 
-            return redirect('/event')->with('success','Event Berhasil Ditambahkan!');
+            if($user->nomor_rekening == null){
+                return view('profile.index',compact('user'));
+            }else{
+                $event = new Event;
+                $event->user_id = $user->id;
+                $event->nama_event = $request->nama_event;
+                $event->deskripsi_event = $request->deskripsi_event;
+                $event->kategori_event = $request->kategori_event;
+                $event->tempat_event = $request->tempat_event;
+                $event->waktu_event = $request->waktu_event;
+                if($request->tanggal_event <= $checktanggal){
+                    Session::flash('error', "Tanggal Invalid!");
+                    return redirect()->back();
+                }else{
+                    $event->tanggal_event = $request->tanggal_event;
+                }
+                $event->status_event = 0;
+                if($request->hasFile('foto_event')){
+                    $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
+                    $path = $request->file('foto_event')->storeAs('public/event',$file);
+                    $event->foto_event = $file;
+                }
+                if($request->hasFile('foto_identitas')){
+                    $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
+                    $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
+                    $event->foto_identitas = $file;
+                }
+                $event->save();
+
+                return redirect('/event')->with('success','Event Berhasil Ditambahkan!');
+            }
         }
 
     }
@@ -146,32 +151,46 @@ class EventController extends Controller
             'foto_event' => 'image|max:2048',
             'foto_identitas' => 'image|max:2048',
         ]);
-        $checktanggal = Carbon::today();
-        $event = Event::where('id',$id)->firstOrFail();
-        $event->nama_event = $request->nama_event;
-        $event->deskripsi_event = $request->deskripsi_event;
-        $event->kategori_event = $request->kategori_event;  
-        $event->tempat_event = $request->tempat_event;
-        $event->waktu_event = $request->waktu_event;
-        if($request->tanggal_event <= $checktanggal){
-            Session::flash('error', "Tanggal Invalid!");
-            return redirect()->back();
-        }else{
-            $event->tanggal_event = $request->tanggal_event;
-        }
-        if($request->hasFile('foto_event')){
-            $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
-            $path = $request->file('foto_event')->storeAs('public/event',$file);
-            $event->foto_event = $file;
-        }
-        if($request->hasFile('foto_identitas')){
-            $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
-            $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
-            $event->foto_identitas = $file;
-        }
-        $event->update();
 
-        return redirect('/event')->with('success','Event Berhasil Diupdate!');
+        if($validator->fails){
+
+            return redirect()->back()
+                   ->withErrors($validator)
+                   ->withInput();
+
+        }else{
+
+            $checktanggal = Carbon::today();
+            $event = Event::find($id);
+            $event->nama_event = $request->nama_event;
+            $event->deskripsi_event = $request->deskripsi_event;
+            $event->kategori_event = $request->kategori_event;  
+            $event->tempat_event = $request->tempat_event;
+            $event->waktu_event = $request->waktu_event;
+            if($request->tanggal_event <= $checktanggal){
+                Session::flash('error', "Tanggal Invalid!");
+                return redirect()->back();
+            }else{
+                $event->tanggal_event = $request->tanggal_event;
+            }
+            if($request->hasFile('foto_event')){
+                $file = time() . '-' . $request->file('foto_event')->getClientOriginalName();
+                $path = $request->file('foto_event')->storeAs('public/event',$file);
+                $event->foto_event = $file;
+            }
+            if($request->hasFile('foto_identitas')){
+                $file = time() . '-' . $request->file('foto_identitas')->getClientOriginalName();
+                $path = $request->file('foto_identitas')->storeAs('public/identitas',$file);
+                $event->foto_identitas = $file;
+            }
+            $event->update();
+
+            return redirect('/event')->with('success','Event Berhasil Diupdate!');
+        }
+
+
+
+        
     }
 
     /**
@@ -182,7 +201,7 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::where('id',$id)->firstOrFail();
+        $event = Event::find($id);
         $tiket = Tiket::where('event_id',$id)->get();
 
         if(Storage::exists('public/event/'.$event->foto_event) && Storage::exists('public/identitas/'.$event->foto_identitas)){
@@ -195,14 +214,14 @@ class EventController extends Controller
     }
 
     public function mulai($id){
-        $event = Event::where('id',$id)->firstOrFail();
+        $event = Event::find($id);
         $event->status_event = 1;
         $event->update();
         return redirect('/event')->with('info','Event Dimulai!');
     }
 
     public function selesai($id){
-        $event = Event::where('id',$id)->firstOrFail();
+        $event = Event::find($id);
         $event->status_event = 2;
         $event->update();
         return redirect('/event')->with('info','Event Selesai!');

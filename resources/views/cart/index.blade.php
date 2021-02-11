@@ -58,8 +58,8 @@
                                             @elseif($t->status == 4)
                                                 <td>Pesanan dibatalkan</td>
                                             @else
-                                            <td>Belum Melakukan Pembayaran | <a href="/transaksi/create/bukti/{{$t->id}}"> Upload Bukti Pembayaran</a></td>
-                                             @endif
+                                            <td>Belum Melakukan Pembayaran | <a href="/checkout/{{$t->id}}"> Checkout</a></td>
+                                            @endif
                                             <td><a href="/transaksi/cancel/{{$t->tiket->id}}">Batalkan pesanan</a></td>
                                         @else
                                         <td>Tiket Dihapus</td>

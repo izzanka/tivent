@@ -107,9 +107,7 @@ class TransaksiController extends Controller
      */
     public function createbukti($id)
     {
-        $transaksi = Transaksi::where('id',$id)->where('status',0)->firstOrFail();
-        $rek = User::where('role','admin')->firstOrFail();
-        return view('transaksi.createbukti',compact('transaksi','rek'));
+       
     }
 
     /**

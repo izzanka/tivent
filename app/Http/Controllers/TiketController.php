@@ -60,7 +60,7 @@ class TiketController extends Controller
         $tiket->jumlah_tiket = $request->jumlah_tiket;
         $tiket->save();
 
-        return redirect('/event')->with('success','Tiket Berhasil Ditambahkan!');
+        return redirect('/tiket/'. $id)->with('success','Tiket Berhasil Ditambahkan!');
     }
 
     /**

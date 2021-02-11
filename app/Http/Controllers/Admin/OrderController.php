@@ -99,13 +99,13 @@ class OrderController extends Controller
         $transaksi->kode_tiket = $list;
         $transaksi->status = 2;
         $transaksi->update();
-        return redirect('/cartadmin');
+        return redirect('/cartadmin')->with('success','Pembayaran Berhasil DiKonfirmasi!');
     }
 
     public function gagalkonfirmasi($id){
         $transaksi = Transaksi::where('id',$id)->firstOrFail();
         $transaksi->status = 3;
         $transaksi->update();
-        return redirect('/cartadmin');
+        return redirect('/cartadmin')->with('error','Pembayaran Gagal DiKonfirmasi!');
     }
 }

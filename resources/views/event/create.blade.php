@@ -30,7 +30,10 @@
                                         <td>:</td>
                                         <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="nama_event">
+                                            <input type="text" class="form-control @error('nama_event'){{'is-invalid'}}@enderror" name="nama_event" value="{{old('nama_event')}}">
+                                            @error('nama_event')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         </td>
                                     </tr>
@@ -39,7 +42,10 @@
                                         <td>Deskripsi Event</td>
                                         <td>:</td>
                                         <td>
-                                            <textarea class="form-control" name="deskripsi_event" rows="3" placeholder="Deskripsi..."></textarea>
+                                            <textarea class="form-control @error('deskripsi_event'){{'is-invalid'}}@enderror" name="deskripsi_event" rows="3" placeholder="Deskripsi..." >{{old('deskripsi_event') ?? ''}}</textarea>
+                                            @error('deskripsi_event')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </td>
                                     </tr>
 
@@ -48,7 +54,8 @@
                                         <td>:</td>
                                         <td>
                                             <div class="form-group">
-                                                <select class="form-control" name="kategori_event">
+                                                <select class="form-control  @error('kategori_event'){{'is-invalid'}}@enderror" name="kategori_event">
+                                                    <option value=""></option>
                                                     <option value="konser">Konser</option>
                                                     <option value="festival">Festival</option>
                                                     <option value="gaming">Gaming</option>
@@ -58,6 +65,9 @@
                                                     <option value="pendidikan">Pendidikan</option>
                                                     <option value="budaya">Budaya</option>
                                                 </select>
+                                                @error('kategori_event')
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
                                             </div>
                                         </td>
                                     </tr>
@@ -67,8 +77,10 @@
                                         <td>Tempat Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="text" class="form-control" name="tempat_event" >
-     
+                                            <input type="text" class="form-control @error('tempat_event'){{'is-invalid'}}@enderror" name="tempat_event" value="{{old('tempat_event')}}">
+                                            @error('tempat_event')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </td>                           
                                             
                                     </tr>
@@ -77,8 +89,10 @@
                                         <td>Waktu Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="time" class="form-control" name="waktu_event" >
-     
+                                            <input type="time" class="form-control @error('waktu_event'){{'is-invalid'}}@enderror" name="waktu_event" value="{{old('waktu_event')}}">
+                                            @error('waktu_event')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </td>                           
                                             
                                     </tr>
@@ -87,8 +101,10 @@
                                         <td>Tanggal Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="date" class="form-control" name="tanggal_event" >
-     
+                                            <input type="date" class="form-control @error('tanggal_event'){{'is-invalid'}}@enderror" name="tanggal_event" value="{{old('tanggal_event')}}">
+                                            @error('tanggal_event')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </td>                           
                                             
                                     </tr>
@@ -98,7 +114,10 @@
                                         <td>Foto Event</td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="foto_event" accept="image/*">
+                                            <input type="file" class="form-control-file @error('foto_event'){{'is-invalid'}}@enderror" name="foto_event" accept="image/*">
+                                            @error('foto_event')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </td>                           
                                     </tr>
                                     <tr>
@@ -106,7 +125,10 @@
                                         <td>Upload Foto Dengan Ktp </td>
                                         <td>:</td>
                                         <td>
-                                            <input type="file" class="form-control-file" name="foto_identitas" accept="image/*">
+                                            <input type="file" class="form-control-file @error('foto_identitas'){{'is-invalid'}}@enderror" name="foto_identitas" accept="image/*">
+                                            @error('foto_identitas')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                             <br>
                                             <button type="submit" class="btn btn-primary float-right mt-3"> Tambah Event</button>
 

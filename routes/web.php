@@ -22,6 +22,7 @@ Route::group(['middleware' => 'preventBackHistory'], function()
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::get('/search','HomeController@search');
+    
     Route::get('/kategori/{kategori}', 'HomeController@kategori');
     Route::get('/detail/{id}','HomeController@detail');
 
@@ -29,6 +30,8 @@ Route::group(['middleware' => 'preventBackHistory'], function()
 
     Route::get('/transaksi/create/{id}','TransaksiController@create');
     Route::post('/transaksi/store/{id}', 'TransaksiController@store');
+    Route::get('/checkout/{id}', 'CheckoutController@show');
+    Route::post('/checkout/update/{id}', 'CheckOutController@update');
     Route::get('/transaksi/create/bukti/{id}', 'TransaksiController@createbukti');
     Route::post('/transaksi/store/bukti/{id}', 'TransaksiController@storebukti');
     Route::get('/transaksi/cancel/{id}','TransaksiController@cancel');
@@ -53,7 +56,7 @@ Route::group(['middleware' => 'preventBackHistory'], function()
         Route::get('/allevent','Admin\EventController@index');
         Route::get('/checktiket','Admin\EventController@tiket');
         Route::get('/checktiket/{kode}', 'Admin\EventController@checktiket');
-        Route::get('/allevent/delete/{id}','Admin\EventController@destroy');
+        Route::delete('/allevent/delete/{id}','Admin\EventController@destroy');
         Route::get('/order/history', 'Admin\HistoryController@index');
         Route::get('/order/konfirmasi/{id}', 'Admin\OrderController@konfirmasi');
         Route::get('/order/gagalkonfirmasi/{id}','Admin\OrderController@gagalkonfirmasi');

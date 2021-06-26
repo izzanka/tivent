@@ -26,7 +26,7 @@ class AdminOrder extends Component
     public function render()
     {
         
-        $orders = Order::where('status',2)->get();
+        $orders = Order::whereIn('status',[2])->get();
         if(!empty($orders)){
             foreach($orders as $order){
                 $orderdetails = OrderDetail::where('order_id',$order->id)->count();

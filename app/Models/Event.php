@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
@@ -19,6 +20,10 @@ class Event extends Model
         'date',
         'images',
     ];
+
+    public function getTime($time){
+        return Carbon::createFromFormat('H:i:s', $time)->format('H:i');
+    }
 
     public function user(){
         return $this->belongsTo(User::class);

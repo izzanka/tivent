@@ -99,12 +99,11 @@
          
                                 </td>
                             </tr>
-                            
                             <tr>
                                 <td>Date</td>
                                 <td>:</td>
                                 <td>
-                                    <input type="date"
+                                    <input type="text"
                                         class="form-control" value="{{ $event->date }}" disabled>
 
                                 </td>
@@ -114,8 +113,8 @@
                                 <td>Time</td>
                                 <td>:</td>
                                 <td>
-                                    <input type="time"
-                                        class="form-control " value="{{ $event->time }}" disabled>
+                                    <input type="text"
+                                        class="form-control " value="{{ $event->getTime($event->time) }}" disabled>
 
                                 </td>
                             </tr>

@@ -37,10 +37,7 @@
                             {{ $orderdetail->order->user->name }} | {{ $orderdetail->order->user->email }}<br>
                             {{ $orderdetail->ticket->type }} | {{ $ticket_code[$i] }}<br>
                             {{ $orderdetail->ticket->event->location }}<br>
-                            @php
-                                $time = \Carbon\Carbon::createFromFormat('H:i:s', $orderdetail->ticket->event->time)->format('H:i');
-                            @endphp
-                            {{ $orderdetail->ticket->event->date }} | {{ $time }}
+                            {{ $orderdetail->ticket->event->date }} | {{ $orderdetail->ticket->event->getTime($orderdetail->ticket->event->time) }}
                         </p>
                     </div>
                 </div>

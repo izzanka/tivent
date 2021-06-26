@@ -70,7 +70,7 @@
               @endif
               <li class="list-group-item">Location : {{ $event->location }}</li>
               <li class="list-group-item">Date     : {{ $event->date }}</li>
-              <li class="list-group-item">Time     : {{ $event->time }}</li>
+              <li class="list-group-item">Time     : {{ $event->getTime($event->time) }}</li>
             </ul>
             <div class="card-body">
                 <a href="" class="card-link">Detail</a>

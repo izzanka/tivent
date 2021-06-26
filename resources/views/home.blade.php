@@ -37,11 +37,8 @@
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Location : {{ $event->location }}</li>
-          @php
-              $time = \Carbon\Carbon::createFromFormat('H:i:s', $event->time)->format('H:i');
-          @endphp
           <li class="list-group-item">Date     : {{ $event->date }}</li>
-          <li class="list-group-item">Time     : {{ $time }}</li>
+          <li class="list-group-item">Time     : {{ $event->getTime($event->time) }}</li>
         </ul>
         <div class="card-body">
             <a href="{{ route('event.detail',$event->id) }}" class="card-link">Detail</a>

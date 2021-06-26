@@ -25,7 +25,7 @@ class UserCart extends Component
      */
     public function render()
     {
-        $orders = Order::where('user_id',auth()->id())->where('status',0)->get();
+        $orders = Order::getOrders([0,null])->get();
         if(!empty($orders)){
             foreach($orders as $order){
                 $orderdetails = OrderDetail::where('order_id',$order->id)->count();

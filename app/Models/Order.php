@@ -14,6 +14,10 @@ class Order extends Model
         'status'
     ];
 
+    public function scopeGetOrders($query,$status){
+        return $query->where('user_id',auth()->id())->whereIn('status',$status);
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

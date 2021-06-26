@@ -25,7 +25,7 @@ class UserHistory extends Component
      */
     public function render()
     {
-        $orders = Order::where('user_id',auth()->id())->whereIn('status',[2,3,4])->get();
+        $orders = Order::getOrders([2,3,4])->get();
         if(!empty($orders)){
             foreach($orders as $order){
                 $historys = OrderDetail::where('order_id',$order->id)->count();

@@ -114,7 +114,7 @@
                                 <td>:</td>
                                 <td>
                                     <input type="text"
-                                        class="form-control " value="{{ $event->getTime($event->time) }}" disabled>
+                                        class="form-control " value="{{ $event->getTime() }}" disabled>
 
                                 </td>
                             </tr>

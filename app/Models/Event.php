@@ -21,8 +21,8 @@ class Event extends Model
         'images',
     ];
 
-    public function getTime($time){
-        return Carbon::createFromFormat('H:i:s', $time)->format('H:i');
+    public function getTime(){
+        return Carbon::createFromFormat('H:i:s', $this->time)->format('H:i');
     }
 
     public function user(){

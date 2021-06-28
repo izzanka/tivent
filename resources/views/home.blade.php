@@ -38,7 +38,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Location : {{ $event->location }}</li>
           <li class="list-group-item">Date     : {{ $event->date }}</li>
-          <li class="list-group-item">Time     : {{ $event->getTime($event->time) }}</li>
+          <li class="list-group-item">Time     : {{ $event->getTime() }}</li>
         </ul>
         <div class="card-body">
             <a href="{{ route('event.detail',$event->id) }}" class="card-link">Detail</a>
@@ -46,7 +46,9 @@
       </div>
     </div>
     @endforeach
-   
+  </div>
+  <div class="mt-4 float-right">
+    {{ $events->links() }}
   </div>
 </div>
 @endsection

@@ -49,7 +49,7 @@
                                         {{ $orderdetail->ticket->type }} | {{ $ticket_code[$i] }}<br>
                                         <hr>
                                         {{ $orderdetail->ticket->event->location }}<br>
-                                        {{ $orderdetail->ticket->event->date }} | {{ $orderdetail->ticket->event->getTime($orderdetail->ticket->event->time) }}
+                                        {{ $orderdetail->ticket->event->date }} | {{ $orderdetail->ticket->event->getTime() }}
                                     </p>
                                 </div>
                             </div>

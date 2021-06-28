@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $events  = Event::latest()->get();
+        $events  = Event::latest()->paginate(5);
         return view('home',compact('events'));
     }
 }

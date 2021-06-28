@@ -13,6 +13,7 @@ class PdfController extends Controller
     {
         $orderdetails = OrderDetail::where('id',$orderdetail->id)->with('ticket')->get();
         $pdf = PDF::loadview('user.pdf.index',compact('orderdetails'));
+        $pdf->setPaper('a4','portrait');
         return $pdf->stream('Tivent-ticket.pdf');
     }
 }

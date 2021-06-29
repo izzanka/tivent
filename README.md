@@ -11,3 +11,13 @@
     <img src="public/ss/ss9.png" alt="ss9">
     <img src="public/ss/ss10.png" alt="ss10">
 </p>
+
+## Installation
+Clone Project ini setelah selesai pada terminal masuk kedalam directory project
+
+1. Composer Install
+2. cp .env.example .env
+3. php artisan key:generate
+4. membuat database dengan nama tivent2
+5. php artisan migrate 
+6. php artisan serve

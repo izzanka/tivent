@@ -6,8 +6,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-TIVENT is a simple event ticket online shop
-
 ## Built With
 
 ### Framework
@@ -19,10 +17,11 @@ TIVENT is a simple event ticket online shop
 
 * [JQuery](https://jquery.com)
 
-## Package
+### Package
 
 * [simplesoftwareio/simple-qrcode](https://github.com/SimpleSoftwareIO/simple-qrcode)
 * [spatie/image](https://github.com/spatie/image)
+* [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf)
 
 <!-- GETTING STARTED -->
 ## Getting Started

@@ -49,9 +49,6 @@ php artisan serve
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
-* Link : https://tivent.000webhostapp.com
-
 <img src="public/ss/ss1.png" alt="ss1">
 <img src="public/ss/ss2.png" alt="ss2">
 <img src="public/ss/ss3.png" alt="ss3">

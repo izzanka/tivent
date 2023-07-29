@@ -5,6 +5,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+A simple website to create events and order event tickets
 
 ## Built With
 
@@ -48,7 +49,7 @@ php artisan serve
 ```
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Overview
 <img src="public/ss/ss1.png" alt="ss1">
 <img src="public/ss/ss2.png" alt="ss2">
 <img src="public/ss/ss3.png" alt="ss3">
